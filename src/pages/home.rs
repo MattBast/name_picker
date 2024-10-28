@@ -1,14 +1,14 @@
-use leptos::*;
+use leptos::prelude::*;
 use rand::seq::SliceRandom;
 use thaw::*;
 
 #[component]
 pub fn Home() -> impl IntoView {
-    let names = create_rw_signal(Vec::new());
+    let names = RwSignal::new(Vec::new());
     names.update(|names| {
-        names.push(create_rw_signal(String::from("Saburo")));
-        names.push(create_rw_signal(String::from("Hanaka")));
-        names.push(create_rw_signal(String::from("Michiko")));
+        names.push(RwSignal::new(String::from("Saburo")));
+        names.push(RwSignal::new(String::from("Hanaka")));
+        names.push(RwSignal::new(String::from("Michiko")));
     });
 
     let emoji_list = get_emojis();
@@ -42,7 +42,7 @@ pub fn NameCard(name: RwSignal<String>, emoji_list: Vec<String>) -> impl IntoVie
         <div class="grow-0 shrink-0 basis-20 sm:basis-28 md:basis-40">
             <Card class="w-full h-full">
                 // A picture to help identify the name.
-                <CardHeader slot>
+                <CardHeader>
                     <div class="flex items-center justify-center text-5xl hover:animate-bounce transition-all duration-75">
                         {random_emoji(emoji_list)}
                     </div>

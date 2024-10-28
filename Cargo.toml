@@ -4,10 +4,18 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-leptos = { version = "0.6.15", features = ["csr"] }
-leptos_meta = { version = "0.6.15", features = ["csr"] }
-leptos_router = { version = "0.6.15", features = ["csr"] }
-thaw = { version = "0.3.4", features = ["csr"] }
+# leptos = { version = "0.6.15", features = ["csr"] }
+# leptos_meta = { version = "0.6.15", features = ["csr"] }
+# leptos_router = { version = "0.6.15", features = ["csr"] }
+
+leptos = { version = "0.7.0-beta5", features = ["csr"] }
+leptos_meta = { version = "^0.7.0-beta5" }
+leptos_router = { version = "^0.7.0-beta5" }
+
+# thaw = { version = "0.3.4", features = ["csr"] }
+
+thaw = { version = "0.4.0-beta3", features = ["csr"] }
+
 icondata = "0.3.0"
 log = "0.4"
 emojis = "0.6.3"
@@ -17,3 +25,6 @@ rand = "0.8"
 wasm-bindgen = { version = "0.2" }
 console_log = { version = "1" }
 console_error_panic_hook = { version = "0.1.7" }
+
+[features]
+csr = ["leptos/csr"]
