@@ -10,6 +10,8 @@ leptos_router = { version = "0.6.15", features = ["csr"] }
 thaw = { version = "0.3.4", features = ["csr"] }
 icondata = "0.3.0"
 log = "0.4"
+emojis = "0.6.3"
+rand = "0.8"
 
 # dependencies for client (enable when csr or hydrate set)
 wasm-bindgen = { version = "0.2" }
