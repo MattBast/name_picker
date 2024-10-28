@@ -2,6 +2,7 @@
 name = "name_picker"
 version = "0.1.0"
 edition = "2021"
+rust-version = "1.82"
 
 [dependencies]
 # leptos = { version = "0.6.15", features = ["csr"] }

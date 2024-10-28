@@ -7,7 +7,7 @@ pub fn Home() -> impl IntoView {
     let names = RwSignal::new(Vec::new());
     names.update(|names| {
         names.push(RwSignal::new(String::from("Saburo")));
-        names.push(RwSignal::new(String::from("Hanaka")));
+        names.push(RwSignal::new(String::from("Hanako")));
         names.push(RwSignal::new(String::from("Michiko")));
     });
 
@@ -26,12 +26,12 @@ pub fn CardGrid(names: RwSignal<Vec<RwSignal<String>>>, emoji_list: Vec<String>)
     view! {
         // Put the card in the centre of the window, place gaps between each
         // one and create new lines of cards if the screen gets too small.
-        <div class="flex flex-wrap gap-4 justify-center">
+        <Flex gap=FlexGap::Small justify=FlexJustify::Center class="flex-wrap">
             // Create one card for every name.
             <For each=move || names.get() key=|name| name.clone() let:name>
                 <NameCard name emoji_list=emoji_list.clone()/>
             </For>
-        </div>
+        </Flex>
     }
 }
 
@@ -40,18 +40,20 @@ pub fn NameCard(name: RwSignal<String>, emoji_list: Vec<String>) -> impl IntoVie
     view! {
         // Stop the card from shrinking
         <div class="grow-0 shrink-0 basis-20 sm:basis-28 md:basis-40">
-            <Card class="w-full h-full">
+            <Card class="w-full h-full p-0 border-slate-200 border-2 rounded">
                 // A picture to help identify the name.
-                <CardHeader>
+                <CardPreview class="bg-blue-200 p-2.5">
                     <div class="flex items-center justify-center text-5xl hover:animate-bounce transition-all duration-75">
                         {random_emoji(emoji_list)}
                     </div>
-                </CardHeader>
+                </CardPreview>
                 // The editable name.
-                <Input
-                    value={name}
-                    class="border-none text-center w-28 sm:w-40 md:w-52"
-                />
+                <div class="p-2.5">
+                    <Input
+                        value={name}
+                        class="border-none text-center w-28 sm:w-40 md:w-52"
+                    />
+                </div>
             </Card>
         </div>
     }
