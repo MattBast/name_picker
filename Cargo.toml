@@ -5,16 +5,16 @@ edition = "2021"
 rust-version = "1.82"
 
 [dependencies]
+# ***  stable version ***
 # leptos = { version = "0.6.15", features = ["csr"] }
 # leptos_meta = { version = "0.6.15", features = ["csr"] }
 # leptos_router = { version = "0.6.15", features = ["csr"] }
+# thaw = { version = "0.3.4", features = ["csr"] }
 
+# *** unstable version ***
 leptos = { version = "0.7.0-beta5", features = ["csr"] }
 leptos_meta = { version = "^0.7.0-beta5" }
 leptos_router = { version = "^0.7.0-beta5" }
-
-# thaw = { version = "0.3.4", features = ["csr"] }
-
 thaw = { version = "0.4.0-beta3", features = ["csr"] }
 
 icondata = "0.3.0"
