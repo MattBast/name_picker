@@ -4,7 +4,11 @@ use rand::seq::SliceRandom;
 use thaw::*;
 
 #[component]
-pub fn NameCard(name: RwSignal<String>, emoji_list: Vec<String>) -> impl IntoView {
+pub fn NameCard(
+    name: RwSignal<String>,
+    emoji_list: Vec<String>,
+    names: RwSignal<Vec<RwSignal<String>>>,
+) -> impl IntoView {
     view! {
         <div class="grow-0 shrink-0 basis-20 sm:basis-28 md:basis-40">
             <Card class="w-full h-full p-0 border-slate-200 border-2 rounded">
@@ -16,7 +20,11 @@ pub fn NameCard(name: RwSignal<String>, emoji_list: Vec<String>) -> impl IntoVie
                 </CardPreview>
                 // The editable name.
                 <div class="p-2.5">
-                    <NameInput name/>
+                    <NameInput name on_enter=move |ev| {
+                        if ev.key() == "Enter" {
+                            names.update(|names| names.push(RwSignal::new(String::new())))
+                        }
+                    }/>
                 </div>
             </Card>
         </div>

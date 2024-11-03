@@ -1,7 +1,11 @@
+use leptos::ev::KeyboardEvent;
 use leptos::prelude::*;
 
 #[component]
-pub fn NameInput(name: RwSignal<String>) -> impl IntoView {
+pub fn NameInput<F>(name: RwSignal<String>, on_enter: F) -> impl IntoView
+where
+    F: Fn(KeyboardEvent) + 'static,
+{
     let input_element: NodeRef<leptos::html::Input> = NodeRef::new();
 
     // Focus on the input element after the card is created.
@@ -28,6 +32,8 @@ pub fn NameInput(name: RwSignal<String>) -> impl IntoView {
                 on:focus=move |_| {
                     ()
                 }
+                // Add keydown event handler that dispatches custom event
+                on:keydown=on_enter
             />
             // The underline animation that appears when the user focusses on the
             // input.
