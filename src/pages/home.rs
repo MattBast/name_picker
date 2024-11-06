@@ -11,17 +11,14 @@ pub fn Home() -> impl IntoView {
         names.push(Person {
             id: Uuid::new_v4(),
             name: RwSignal::new(String::from("Saburo")),
-            position: 0,
         });
         names.push(Person {
             id: Uuid::new_v4(),
             name: RwSignal::new(String::from("Hanako")),
-            position: 1,
         });
         names.push(Person {
             id: Uuid::new_v4(),
             name: RwSignal::new(String::from("Michiko")),
-            position: 2,
         });
     });
 
@@ -41,7 +38,7 @@ pub fn CardGrid(people: RwSignal<Vec<Person>>, emoji_list: Vec<String>) -> impl 
             // Create one card for every name.
             <For each=move || people.get() key=|person| person.id let:person>
                 <NameCard
-                    name={person.name}
+                    name=person.name
                     emoji_list=emoji_list.clone()
                     on_keyboard_event=move |ev| {
                         if ev.key() == "Enter" || ev.key() == "Tab" {
@@ -49,6 +46,7 @@ pub fn CardGrid(people: RwSignal<Vec<Person>>, emoji_list: Vec<String>) -> impl 
                             new_card(people)
                         }
                     }
+
                     on_click_event=move |_| delete_card(people, person.id)
                 />
             </For>
@@ -78,7 +76,6 @@ fn new_card(people: RwSignal<Vec<Person>>) {
         people.push(Person {
             id: Uuid::new_v4(),
             name: RwSignal::new(String::new()),
-            position: people.len(),
         })
     })
 }

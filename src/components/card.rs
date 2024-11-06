@@ -16,30 +16,25 @@ where
     M: Fn(MouseEvent) + Send + 'static,
 {
     view! {
-        <div class="grow-0 shrink-0 basis-20 sm:basis-28 md:basis-40">
-            <Card class="w-full h-full p-0 border-slate-200 border-2 rounded">
-                <CardHeader>
-                    <Body1>""</Body1>
-                    <CardHeaderAction slot>
-                        <Button
-                            size=ButtonSize::Large
-                            icon=icondata::AiCloseOutlined
-                            on:click=on_click_event
-                        />
-                    </CardHeaderAction>
-                </CardHeader>
-
-                // A picture to help identify the name.
-                <CardPreview class="bg-blue-200 p-2.5">
-                    <div class="flex items-center justify-center text-5xl hover:animate-bounce transition-all duration-75">
-                        {random_emoji(emoji_list)}
-                    </div>
-                </CardPreview>
-                // The editable name.
-                <div class="p-2.5">
+        <div class="relative flex flex-col md:flex-row w-full my-2 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
+            // The random emoji that provides a visual identity for the person.
+            <div class="relative px-4 py-2.5 text-5xl flex items-center justify-center">
+                {random_emoji(emoji_list)}
+            </div>
+            <div class="flex items-center w-full justify-between">
+                // The editable persons name.
+                <h4 class="mb-2 text-slate-800 text-xl font-semibold w-full">
                     <NameInput name on_keyboard_event=on_keyboard_event/>
+                </h4>
+                // The delete button.
+                <div class="pr-2">
+                    <Button
+                        size=ButtonSize::Large
+                        icon=icondata::AiCloseOutlined
+                        on:click=on_click_event
+                    />
                 </div>
-            </Card>
+            </div>
         </div>
     }
 }
