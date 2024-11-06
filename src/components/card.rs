@@ -1,14 +1,18 @@
 use crate::components::NameInput;
+use leptos::ev::KeyboardEvent;
 use leptos::prelude::*;
 use rand::seq::SliceRandom;
 use thaw::*;
 
 #[component]
-pub fn NameCard(
+pub fn NameCard<F>(
     name: RwSignal<String>,
     emoji_list: Vec<String>,
-    names: RwSignal<Vec<RwSignal<String>>>,
-) -> impl IntoView {
+    on_keyboard_event: F,
+) -> impl IntoView
+where
+    F: Fn(KeyboardEvent) + Send + 'static,
+{
     view! {
         <div class="grow-0 shrink-0 basis-20 sm:basis-28 md:basis-40">
             <Card class="w-full h-full p-0 border-slate-200 border-2 rounded">
@@ -20,11 +24,7 @@ pub fn NameCard(
                 </CardPreview>
                 // The editable name.
                 <div class="p-2.5">
-                    <NameInput name on_enter=move |ev| {
-                        if ev.key() == "Enter" {
-                            names.update(|names| names.push(RwSignal::new(String::new())))
-                        }
-                    }/>
+                    <NameInput name on_keyboard_event=on_keyboard_event/>
                 </div>
             </Card>
         </div>

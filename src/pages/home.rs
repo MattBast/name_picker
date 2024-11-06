@@ -26,7 +26,15 @@ pub fn CardGrid(names: RwSignal<Vec<RwSignal<String>>>, emoji_list: Vec<String>)
         <Flex gap=FlexGap::Small justify=FlexJustify::Center class="flex-wrap">
             // Create one card for every name.
             <For each=move || names.get() key=|name| name.clone() let:name>
-                <NameCard name emoji_list=emoji_list.clone() names/>
+                <NameCard
+                    name
+                    emoji_list=emoji_list.clone()
+                    on_keyboard_event=move |ev| {
+                        if ev.key() == "Enter" {
+                            new_card(names)
+                        }
+                    }
+                />
             </For>
             // Button for adding a new card.
             <Button

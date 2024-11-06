@@ -2,7 +2,7 @@ use leptos::ev::KeyboardEvent;
 use leptos::prelude::*;
 
 #[component]
-pub fn NameInput<F>(name: RwSignal<String>, on_enter: F) -> impl IntoView
+pub fn NameInput<F>(name: RwSignal<String>, on_keyboard_event: F) -> impl IntoView
 where
     F: Fn(KeyboardEvent) + 'static,
 {
@@ -33,7 +33,7 @@ where
                     ()
                 }
                 // Add keydown event handler that dispatches custom event
-                on:keydown=on_enter
+                on:keydown=on_keyboard_event
             />
             // The underline animation that appears when the user focusses on the
             // input.
