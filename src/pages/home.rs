@@ -1,37 +1,51 @@
 use crate::components::NameCard;
+use crate::data::Person;
 use leptos::prelude::*;
 use thaw::*;
+use uuid::Uuid;
 
 #[component]
 pub fn Home() -> impl IntoView {
-    let names = RwSignal::new(Vec::new());
-    names.update(|names| {
-        names.push(RwSignal::new(String::from("Saburo")));
-        names.push(RwSignal::new(String::from("Hanako")));
-        names.push(RwSignal::new(String::from("Michiko")));
+    let people = RwSignal::new(Vec::new());
+    people.update(|names| {
+        names.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::from("Saburo")),
+            position: 0,
+        });
+        names.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::from("Hanako")),
+            position: 1,
+        });
+        names.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::from("Michiko")),
+            position: 2,
+        });
     });
 
     let emoji_list = get_emojis();
 
     view! {
         <div class="min-h-screen w-full flex items-center justify-center p-4">
-            <CardGrid names emoji_list/>
+            <CardGrid people emoji_list/>
         </div>
     }
 }
 
 #[component]
-pub fn CardGrid(names: RwSignal<Vec<RwSignal<String>>>, emoji_list: Vec<String>) -> impl IntoView {
+pub fn CardGrid(people: RwSignal<Vec<Person>>, emoji_list: Vec<String>) -> impl IntoView {
     view! {
         <Flex gap=FlexGap::Small justify=FlexJustify::Center class="flex-wrap">
             // Create one card for every name.
-            <For each=move || names.get() key=|name| name.clone() let:name>
+            <For each=move || people.get() key=|person| person.id let:person>
                 <NameCard
-                    name
+                    name={person.name}
                     emoji_list=emoji_list.clone()
                     on_keyboard_event=move |ev| {
                         if ev.key() == "Enter" {
-                            new_card(names)
+                            new_card(people)
                         }
                     }
                 />
@@ -40,7 +54,7 @@ pub fn CardGrid(names: RwSignal<Vec<RwSignal<String>>>, emoji_list: Vec<String>)
             <Button
                 appearance=ButtonAppearance::Transparent
                 icon=icondata::ChPlus
-                on_click=move |_| new_card(names)
+                on_click=move |_| new_card(people)
             >
                 "New"
             </Button>
@@ -57,6 +71,12 @@ fn get_emojis() -> Vec<String> {
         .collect()
 }
 
-fn new_card(names: RwSignal<Vec<RwSignal<String>>>) {
-    names.update(|names| names.push(RwSignal::new(String::new())))
+fn new_card(people: RwSignal<Vec<Person>>) {
+    people.update(|people| {
+        people.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::new()),
+            position: people.len() + 1,
+        })
+    })
 }
