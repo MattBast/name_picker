@@ -44,10 +44,12 @@ pub fn CardGrid(people: RwSignal<Vec<Person>>, emoji_list: Vec<String>) -> impl 
                     name={person.name}
                     emoji_list=emoji_list.clone()
                     on_keyboard_event=move |ev| {
-                        if ev.key() == "Enter" {
+                        if ev.key() == "Enter" || ev.key() == "Tab" {
+                            ev.prevent_default();
                             new_card(people)
                         }
                     }
+                    on_click_event=move |_| delete_card(people, person.id)
                 />
             </For>
             // Button for adding a new card.
@@ -76,7 +78,15 @@ fn new_card(people: RwSignal<Vec<Person>>) {
         people.push(Person {
             id: Uuid::new_v4(),
             name: RwSignal::new(String::new()),
-            position: people.len() + 1,
+            position: people.len(),
         })
+    })
+}
+
+fn delete_card(people: RwSignal<Vec<Person>>, id: Uuid) {
+    people.update(|people| {
+        if let Some(index) = people.iter().position(|person| person.id == id) {
+            let _ = people.remove(index);
+        };
     })
 }
