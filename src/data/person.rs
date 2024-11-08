@@ -5,4 +5,5 @@ use uuid::Uuid;
 pub struct Person {
     pub id: Uuid,
     pub name: RwSignal<String>,
+    pub input_ref: NodeRef<leptos::html::Input>,
 }

@@ -11,14 +11,17 @@ pub fn Home() -> impl IntoView {
         names.push(Person {
             id: Uuid::new_v4(),
             name: RwSignal::new(String::from("Saburo")),
+            input_ref: NodeRef::new(),
         });
         names.push(Person {
             id: Uuid::new_v4(),
             name: RwSignal::new(String::from("Hanako")),
+            input_ref: NodeRef::new(),
         });
         names.push(Person {
             id: Uuid::new_v4(),
             name: RwSignal::new(String::from("Michiko")),
+            input_ref: NodeRef::new(),
         });
     });
 
@@ -43,21 +46,24 @@ pub fn CardGrid(people: RwSignal<Vec<Person>>, emoji_list: Vec<String>) -> impl 
                     on_keyboard_event=move |ev| {
                         if ev.key() == "Enter" || ev.key() == "Tab" {
                             ev.prevent_default();
-                            new_card(people)
+                            next_card(people, person.id)
                         }
                     }
 
                     on_click_event=move |_| delete_card(people, person.id)
+                    node_ref=person.input_ref
                 />
             </For>
             // Button for adding a new card.
-            <Button
-                appearance=ButtonAppearance::Transparent
-                icon=icondata::ChPlus
-                on_click=move |_| new_card(people)
-            >
-                "New"
-            </Button>
+            <div class="w-full text-gray-500">
+                <Button
+                    appearance=ButtonAppearance::Transparent
+                    icon=icondata::ChPlus
+                    on_click=move |_| new_card(people)
+                >
+                    " New"
+                </Button>
+            </div>
         </Flex>
     }
 }
@@ -71,11 +77,31 @@ fn get_emojis() -> Vec<String> {
         .collect()
 }
 
+fn next_card(people: RwSignal<Vec<Person>>, current_id: Uuid) {
+    let current_index = people
+        .get_untracked()
+        .iter()
+        .position(|p| p.id == current_id)
+        .unwrap();
+
+    // Check if there's a next card and focus on it if there is one.
+    if current_index < people.get().len() - 1 {
+        let next_person_ref = people.get_untracked()[current_index + 1].input_ref;
+        if let Some(input) = next_person_ref.get_untracked() {
+            let _ = input.focus();
+        }
+    } else {
+        // Create new card if we're at the last position
+        new_card(people)
+    }
+}
+
 fn new_card(people: RwSignal<Vec<Person>>) {
     people.update(|people| {
         people.push(Person {
             id: Uuid::new_v4(),
             name: RwSignal::new(String::new()),
+            input_ref: NodeRef::new(),
         })
     })
 }
