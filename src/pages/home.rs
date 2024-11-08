@@ -54,6 +54,12 @@ pub fn CardGrid(people: RwSignal<Vec<Person>>, emoji_list: Vec<String>) -> impl 
                         }
                     }
 
+                    on_blur_event=move |_| {
+                        if person.name.get_untracked().is_empty() {
+                            delete_card(people, person.id)
+                        }
+                    }
+
                     on_click_event=move |_| delete_card(people, person.id)
                     node_ref=person.input_ref
                 />

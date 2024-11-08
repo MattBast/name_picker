@@ -1,17 +1,17 @@
-use leptos::ev::KeyboardEvent;
+use leptos::ev::{FocusEvent, KeyboardEvent};
 use leptos::prelude::*;
 
 #[component]
-pub fn NameInput<F>(
+pub fn NameInput<F, B>(
     name: RwSignal<String>,
     on_keyboard_event: F,
+    on_blur_event: B,
     node_ref: NodeRef<leptos::html::Input>,
 ) -> impl IntoView
 where
     F: Fn(KeyboardEvent) + 'static,
+    B: Fn(FocusEvent) + 'static,
 {
-    // let input_element: NodeRef<leptos::html::Input> = NodeRef::new();
-
     // Focus on the input element after the card is created.
     Effect::new(move |_| {
         if let Some(input) = node_ref.get_untracked() {
@@ -28,14 +28,20 @@ where
                 w-full px-4 pb-2 pt-4 text-gray-700 bg-white outline-none
                 "
                 placeholder="Your name..."
-                value=name
+                // Change the value of the person name to match the value in the input
+                on:input=move |ev| {
+                    name.set(event_target_value(&ev));
+                }
+
+                prop:value=name
                 node_ref=node_ref
                 // it's a strange hack but the underline animation that triggers
                 // on a focus event doesn't trigger unless this focus listener
                 // is added (even though it's returning none).
                 on:focus=move |_| { () }
-
-                // Add keydown event handler that dispatches custom event
+                // Bubble up a blue event
+                on:blur=on_blur_event
+                // Bubble up a keydown event
                 on:keydown=on_keyboard_event
             />
             // The underline animation that appears when the user focusses on the
