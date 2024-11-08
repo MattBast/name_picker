@@ -44,7 +44,11 @@ pub fn CardGrid(people: RwSignal<Vec<Person>>, emoji_list: Vec<String>) -> impl 
                     name=person.name
                     emoji_list=emoji_list.clone()
                     on_keyboard_event=move |ev| {
-                        if ev.key() == "Enter" || ev.key() == "Tab" {
+                        if ev.key() == "Tab" && ev.shift_key() {
+                            ev.prevent_default();
+                            prev_card(people, person.id)
+                        }
+                        if ev.key() == "Enter" || (ev.key() == "Tab" && !ev.shift_key()) {
                             ev.prevent_default();
                             next_card(people, person.id)
                         }
@@ -93,6 +97,23 @@ fn next_card(people: RwSignal<Vec<Person>>, current_id: Uuid) {
     } else {
         // Create new card if we're at the last position
         new_card(people)
+    }
+}
+
+fn prev_card(people: RwSignal<Vec<Person>>, current_id: Uuid) {
+    let current_index = people
+        .get_untracked()
+        .iter()
+        .position(|p| p.id == current_id)
+        .unwrap();
+
+    // Check if there's a previous card and focus on it if there is one.
+    // Otherwise do nothing.
+    if current_index != 0 {
+        let next_person_ref = people.get_untracked()[current_index - 1].input_ref;
+        if let Some(input) = next_person_ref.get_untracked() {
+            let _ = input.focus();
+        }
     }
 }
 

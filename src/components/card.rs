@@ -25,7 +25,7 @@ where
             <div class="flex items-center w-full justify-between">
                 // The editable persons name.
                 <h4 class="mb-2 text-slate-800 text-xl font-semibold w-full">
-                <NameInput name on_keyboard_event=on_keyboard_event node_ref/>
+                    <NameInput name on_keyboard_event=on_keyboard_event node_ref/>
                 </h4>
                 // The delete button.
                 <div class="pr-2">
