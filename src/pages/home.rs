@@ -1,4 +1,4 @@
-use crate::components::NameCard;
+use crate::components::{BottomNav, NameCard};
 use crate::data::Person;
 use leptos::prelude::*;
 use thaw::*;
@@ -31,6 +31,11 @@ pub fn Home() -> impl IntoView {
         <div class="min-h-screen w-full flex items-center justify-center p-4">
             <CardGrid people emoji_list/>
         </div>
+
+        <BottomNav
+            spin_function=move |_| {log!("Clicked spin")}
+            new_name=move |_| new_card(people)
+        />
     }
 }
 
@@ -64,16 +69,6 @@ pub fn CardGrid(people: RwSignal<Vec<Person>>, emoji_list: Vec<String>) -> impl 
                     node_ref=person.input_ref
                 />
             </For>
-            // Button for adding a new card.
-            <div class="w-full text-gray-500">
-                <Button
-                    appearance=ButtonAppearance::Transparent
-                    icon=icondata::ChPlus
-                    on_click=move |_| new_card(people)
-                >
-                    " New"
-                </Button>
-            </div>
         </Flex>
     }
 }
