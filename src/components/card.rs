@@ -1,8 +1,7 @@
-use crate::components::NameInput;
+use crate::components::{NameInput, TransparentButton};
 use leptos::ev::{FocusEvent, KeyboardEvent, MouseEvent};
 use leptos::prelude::*;
 use rand::seq::SliceRandom;
-use thaw::*;
 
 #[component]
 pub fn NameCard<F, M, B>(
@@ -31,10 +30,10 @@ where
                 </h4>
                 // The delete button.
                 <div class="pr-2">
-                    <Button
-                        size=ButtonSize::Large
+                    <TransparentButton
+                        text=None
                         icon=icondata::AiCloseOutlined
-                        on:click=on_click_event
+                        on_click=on_click_event
                     />
                 </div>
             </div>
