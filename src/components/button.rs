@@ -29,23 +29,17 @@ where
 }
 
 #[component]
-pub fn FilledButton<F>(text: Option<String>, icon: icondata::Icon, on_click: F) -> impl IntoView
+pub fn FilledButton<F>(on_click: F, children: Children) -> impl IntoView
 where
     F: Fn(MouseEvent) + 'static,
 {
-    let button_text = match text {
-        Some(t) => t,
-        None => String::new(),
-    };
-
     view! {
         <button
-            class="rounded-md bg-pink-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-pink-500 focus:shadow-none active:bg-pink-500 hover:bg-pink-500 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+            class="rounded-md bg-blue-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-500 focus:shadow-none active:bg-blue-500 hover:bg-blue-500 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
             type="button"
             on:click=on_click
         >
-            <Icon icon=icon/>
-            {button_text}
+            {children()}
         </button>
     }
 }
