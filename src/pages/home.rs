@@ -51,16 +51,25 @@ pub fn CardGrid(people: RwSignal<Vec<Person>>, emoji_list: Vec<String>) -> impl 
                     name=person.name
                     emoji_list=emoji_list.clone()
                     on_keyboard_event=move |ev| {
+                        // Go to previous card in the list when shift+tab is pressed.
                         if ev.key() == "Tab" && ev.shift_key() {
                             ev.prevent_default();
                             prev_card(people, person.id)
                         }
+                        // Go to next card in the list when tab is pressed.
                         if ev.key() == "Enter" || (ev.key() == "Tab" && !ev.shift_key()) {
                             ev.prevent_default();
-                            next_card(people, person.id)
+                            next_card(people, person)
+                        }
+                        // Trigger a blur event when escape is pressed.
+                        if ev.key() == "Escape" {
+                            ev.prevent_default();
+                            if let Some(input) = person.input_ref.get_untracked() {
+                                let _ = input.blur();
+                            }
                         }
                     }
-
+                    // Delete the card if the user blurs and the input was left empty.
                     on_blur_event=move |_| {
                         if person.name.get_untracked().is_empty() {
                             delete_card(people, person.id)
@@ -84,22 +93,25 @@ fn get_emojis() -> Vec<String> {
         .collect()
 }
 
-fn next_card(people: RwSignal<Vec<Person>>, current_id: Uuid) {
+fn next_card(people: RwSignal<Vec<Person>>, current_person: Person) {
     let current_index = people
         .get_untracked()
         .iter()
-        .position(|p| p.id == current_id)
+        .position(|p| p.id == current_person.id)
         .unwrap();
 
     // Check if there's a next card and focus on it if there is one.
-    if current_index < people.get().len() - 1 {
+    if current_index < people.get_untracked().len() - 1 {
         let next_person_ref = people.get_untracked()[current_index + 1].input_ref;
         if let Some(input) = next_person_ref.get_untracked() {
             let _ = input.focus();
         }
     } else {
-        // Create new card if we're at the last position
-        new_card(people)
+        // Create new card if we're at the last position so long as the current
+        // input isn't empty.
+        if !current_person.name.get_untracked().is_empty() {
+            new_card(people)
+        }
     }
 }
 
@@ -130,10 +142,20 @@ fn new_card(people: RwSignal<Vec<Person>>) {
     })
 }
 
-fn delete_card(people: RwSignal<Vec<Person>>, id: Uuid) {
-    people.update(|people| {
+fn delete_card(people_signal: RwSignal<Vec<Person>>, id: Uuid) {
+    people_signal.update(|people| {
         if let Some(index) = people.iter().position(|person| person.id == id) {
+            // Delete the card.
             let _ = people.remove(index);
+
+            // Check if there's a previous card and focus on it if there is one.
+            // Otherwise do nothing.
+            if index != 0 {
+                let prev_person_ref = people[index - 1].input_ref;
+                if let Some(input) = prev_person_ref.get_untracked() {
+                    let _ = input.focus();
+                }
+            }
         };
     })
 }
