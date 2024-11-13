@@ -10,7 +10,7 @@ where
     F2: Fn(MouseEvent) + 'static,
 {
     view! {
-        <nav class="fixed bottom-0 left-0 right-0 w-full py-4 border-t-2 border-yellow-300 bg-white">
+        <div class="w-full py-4 border-t-2 border-yellow-300 bg-white">
               <div class="flex justify-center items-center gap-2 mt-2 mb-4 w-full">
                     <FilledButton on_click=spin_function>
                         <Icon icon=icondata::FaDiceSolid/>
@@ -21,6 +21,6 @@ where
                         "Add a name"
                     </FilledButton>
               </div>
-        </nav>
+        </div>
     }
 }

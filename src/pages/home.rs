@@ -28,14 +28,16 @@ pub fn Home() -> impl IntoView {
     let emoji_list = get_emojis();
 
     view! {
-        <div class="min-h-screen w-full flex items-center justify-center p-4">
-            <CardGrid people emoji_list/>
-        </div>
+        <div class="h-screen w-full flex flex-col">
+            <div class="flex-1 w-full flex justify-center items-start p-4 overflow-y-auto">
+                <CardGrid people emoji_list/>
+            </div>
 
-        <BottomNav
-            spin_function=move |_| {log!("Clicked spin")}
-            new_name=move |_| new_card(people)
-        />
+            <BottomNav
+                spin_function=move |_| {log!("Clicked spin")}
+                new_name=move |_| new_card(people)
+            />
+        </div>
     }
 }
 
