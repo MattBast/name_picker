@@ -1,6 +1,7 @@
 use crate::components::{BottomNav, NameCard};
 use crate::data::Person;
 use leptos::prelude::*;
+use rand::{seq::SliceRandom, thread_rng};
 use thaw::*;
 use uuid::Uuid;
 
@@ -34,7 +35,7 @@ pub fn Home() -> impl IntoView {
             </div>
 
             <BottomNav
-                spin_function=move |_| {log!("Clicked spin")}
+                spin_function=move |_| random_card(people)
                 new_name=move |_| new_card(people)
             />
         </div>
@@ -158,4 +159,12 @@ fn delete_card(people_signal: RwSignal<Vec<Person>>, id: Uuid) {
             }
         };
     })
+}
+
+fn random_card(people: RwSignal<Vec<Person>>) {
+    let random_name = match people.get_untracked().choose(&mut thread_rng()) {
+        Some(person) => person.name.get_untracked(),
+        None => "Failed".to_string(),
+    };
+    log!("{:?}", random_name);
 }
