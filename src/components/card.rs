@@ -20,7 +20,7 @@ where
     view! {
         <div class="relative flex flex-col md:flex-row w-full my-2 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
             // The random emoji that provides a visual identity for the person.
-            <div class="relative px-4 py-2.5 text-5xl flex items-center justify-center">
+            <div class="relative px-4 py-2.5 text-3xl flex items-center justify-center bg-blue-200 m-1 rounded-lg">
                 {random_emoji(emoji_list)}
             </div>
             <div class="flex items-center w-full justify-between">
@@ -29,7 +29,7 @@ where
                     <NameInput name on_keyboard_event on_blur_event node_ref/>
                 </h4>
                 // The delete button.
-                <div class="pr-2">
+                <div class="pr-1">
                     <TransparentButton
                         text=None
                         icon=icondata::AiCloseOutlined
