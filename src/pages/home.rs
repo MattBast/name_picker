@@ -13,20 +13,28 @@ pub fn Home() -> impl IntoView {
             id: Uuid::new_v4(),
             name: RwSignal::new(String::from("Saburo")),
             input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
         });
         names.push(Person {
             id: Uuid::new_v4(),
             name: RwSignal::new(String::from("Hanako")),
             input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
         });
         names.push(Person {
             id: Uuid::new_v4(),
             name: RwSignal::new(String::from("Michiko")),
             input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
         });
     });
 
     let emoji_list = get_emojis();
+
+    let picked = RwSignal::new(false);
 
     view! {
         <div class="h-screen w-full flex flex-col">
@@ -35,8 +43,10 @@ pub fn Home() -> impl IntoView {
             </div>
 
             <BottomNav
-                spin_function=move |_| random_card(people)
-                new_name=move |_| new_card(people)
+                spin_function=move |_| random_card(people, picked)
+                new_function=move |_| new_card(people)
+                reset_function=move |_| reset_cards(people, picked)
+                picked
             />
         </div>
     }
@@ -51,18 +61,17 @@ pub fn CardGrid(people: RwSignal<Vec<Person>>, emoji_list: Vec<String>) -> impl 
                 <NameCard
                     name=person.name
                     emoji_list=emoji_list.clone()
+                    picked=person.picked
+                    not_picked=person.not_picked
                     on_keyboard_event=move |ev| {
-                        // Go to previous card in the list when shift+tab is pressed.
                         if ev.key() == "Tab" && ev.shift_key() {
                             ev.prevent_default();
                             prev_card(people, person.id)
                         }
-                        // Go to next card in the list when tab is pressed.
                         if ev.key() == "Enter" || (ev.key() == "Tab" && !ev.shift_key()) {
                             ev.prevent_default();
                             next_card(people, person)
                         }
-                        // Trigger a blur event when escape is pressed.
                         if ev.key() == "Escape" {
                             ev.prevent_default();
                             if let Some(input) = person.input_ref.get_untracked() {
@@ -70,6 +79,7 @@ pub fn CardGrid(people: RwSignal<Vec<Person>>, emoji_list: Vec<String>) -> impl 
                             }
                         }
                     }
+
                     // Delete the card if the user blurs and the input was left empty.
                     on_blur_event=move |_| {
                         if person.name.get_untracked().is_empty() {
@@ -139,6 +149,8 @@ fn new_card(people: RwSignal<Vec<Person>>) {
             id: Uuid::new_v4(),
             name: RwSignal::new(String::new()),
             input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
         })
     })
 }
@@ -161,10 +173,38 @@ fn delete_card(people_signal: RwSignal<Vec<Person>>, id: Uuid) {
     })
 }
 
-fn random_card(people: RwSignal<Vec<Person>>) {
-    let random_name = match people.get_untracked().choose(&mut thread_rng()) {
-        Some(person) => person.name.get_untracked(),
-        None => "Failed".to_string(),
-    };
-    log!("{:?}", random_name);
+fn random_card(people: RwSignal<Vec<Person>>, picked: RwSignal<bool>) {
+    // Randomly pick a person from the list.
+    match people.get_untracked().choose(&mut thread_rng()) {
+        Some(picked_person) => {
+            // Hide the spin and new name buttons.
+            picked.set(true);
+            // Set the selected person as picked so their style highlights
+            // them to the user.
+            picked_person.picked.set(true);
+            // Set all other people to not_picked so their style hides
+            // them from the user.
+            people.update(|p| {
+                p.iter_mut().for_each(|person| {
+                    if person.id != picked_person.id {
+                        person.not_picked.set(true)
+                    }
+                })
+            })
+        }
+        // Placeholder log if the list was empty.
+        None => log!("Failed to pick someone."),
+    }
+}
+
+fn reset_cards(people: RwSignal<Vec<Person>>, picked: RwSignal<bool>) {
+    people.update(|p| {
+        // Hide the reset button.
+        picked.set(false);
+        // Set all people to neither picked or not picked.
+        p.iter_mut().for_each(|person| {
+            person.picked.set(false);
+            person.not_picked.set(false);
+        })
+    })
 }

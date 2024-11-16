@@ -6,4 +6,6 @@ pub struct Person {
     pub id: Uuid,
     pub name: RwSignal<String>,
     pub input_ref: NodeRef<leptos::html::Input>,
+    pub picked: RwSignal<bool>,
+    pub not_picked: RwSignal<bool>,
 }

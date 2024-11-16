@@ -7,6 +7,8 @@ use rand::seq::SliceRandom;
 pub fn NameCard<F, M, B>(
     name: RwSignal<String>,
     emoji_list: Vec<String>,
+    picked: RwSignal<bool>,
+    not_picked: RwSignal<bool>,
     on_keyboard_event: F,
     on_click_event: M,
     on_blur_event: B,
@@ -18,7 +20,12 @@ where
     B: Fn(FocusEvent) + 'static,
 {
     view! {
-        <div class="relative flex flex-col md:flex-row w-full my-2 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
+        <div
+            class="relative flex flex-col md:flex-row w-full my-2 bg-white shadow-sm border border-slate-200 rounded-lg w-96 transition-all"
+            class: opacity-50=move || not_picked.get()
+            class: scale-75=move || not_picked.get()
+            class: scale-110=move || picked.get()
+        >
             // The random emoji that provides a visual identity for the person.
             <div class="relative px-4 py-2.5 text-3xl flex items-center justify-center bg-blue-200 m-1 rounded-lg">
                 {random_emoji(emoji_list)}
