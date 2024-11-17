@@ -18,19 +18,19 @@ where
     view! {
         <div class="w-full py-4 border-t-2 border-yellow-300 bg-white">
             <div class="flex justify-center items-center gap-2 mt-2 mb-4 w-full">
-                <div class:hidden=move || picked.get()>
+                <div class: hidden=move || picked.get()>
                     <FilledButton on_click=spin_function>
                         <Icon icon=icondata::FaDiceSolid/>
                         "Spin"
                     </FilledButton>
                 </div>
-                <div class:hidden=move || picked.get()>
+                <div class: hidden=move || picked.get()>
                     <FilledButton on_click=new_function>
                         <Icon icon=icondata::AiPlusOutlined/>
                         "Add a name"
                     </FilledButton>
                 </div>
-                <div class:hidden=move || !picked.get()>
+                <div class: hidden=move || !picked.get()>
                     <FilledButton on_click=reset_function>
                         <Icon icon=icondata::BsArrowCounterclockwise/>
                         "Reset"

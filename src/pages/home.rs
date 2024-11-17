@@ -30,6 +30,111 @@ pub fn Home() -> impl IntoView {
             picked: RwSignal::new(false),
             not_picked: RwSignal::new(false),
         });
+        names.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::from("Saburo")),
+            input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
+        });
+        names.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::from("Hanako")),
+            input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
+        });
+        names.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::from("Michiko")),
+            input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
+        });
+        names.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::from("Saburo")),
+            input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
+        });
+        names.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::from("Hanako")),
+            input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
+        });
+        names.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::from("Michiko")),
+            input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
+        });
+        names.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::from("Saburo")),
+            input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
+        });
+        names.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::from("Hanako")),
+            input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
+        });
+        names.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::from("Michiko")),
+            input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
+        });
+        names.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::from("Saburo")),
+            input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
+        });
+        names.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::from("Hanako")),
+            input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
+        });
+        names.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::from("Michiko")),
+            input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
+        });
+        names.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::from("Saburo")),
+            input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
+        });
+        names.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::from("Hanako")),
+            input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
+        });
+        names.push(Person {
+            id: Uuid::new_v4(),
+            name: RwSignal::new(String::from("Michiko")),
+            input_ref: NodeRef::new(),
+            picked: RwSignal::new(false),
+            not_picked: RwSignal::new(false),
+        });
     });
 
     let emoji_list = get_emojis();
@@ -182,6 +287,10 @@ fn random_card(people: RwSignal<Vec<Person>>, picked: RwSignal<bool>) {
             // Set the selected person as picked so their style highlights
             // them to the user.
             picked_person.picked.set(true);
+            // Scroll to the the picked persons card.
+            if let Some(input) = picked_person.input_ref.get_untracked() {
+                let _ = input.scroll_into_view();
+            }
             // Set all other people to not_picked so their style hides
             // them from the user.
             people.update(|p| {
