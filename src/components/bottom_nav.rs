@@ -16,8 +16,8 @@ where
     F3: Fn(MouseEvent) + 'static,
 {
     view! {
-        <div class="w-full py-4 border-t-2 border-yellow-300 bg-white">
-            <div class="flex justify-center items-center gap-2 mt-2 mb-4 w-full">
+        <div class="w-full py-4 bg-yellow-300">
+            <div class="flex justify-center items-center gap-2 m-3 w-full">
                 <div class: hidden=move || picked.get()>
                     <FilledButton on_click=spin_function>
                         <Icon icon=icondata::FaDiceSolid/>

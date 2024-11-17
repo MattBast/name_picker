@@ -21,13 +21,13 @@ where
 {
     view! {
         <div
-            class="relative flex flex-col md:flex-row w-full my-2 bg-white shadow-sm border border-slate-200 rounded-lg w-96 transition-all"
+            class="relative flex flex-col md:flex-row w-full my-2 bg-white shadow-sm border border-slate-200 rounded-lg w-96 transition-all overflow-hidden"
             class: opacity-50=move || not_picked.get()
-            class: scale-75=move || not_picked.get()
-            class: scale-110=move || picked.get()
+            class: scale-95=move || not_picked.get()
+            class: scale-105=move || picked.get()
         >
             // The random emoji that provides a visual identity for the person.
-            <div class="relative px-4 py-2.5 text-3xl flex items-center justify-center bg-blue-200 m-1 rounded-lg">
+            <div class="px-4 py-2.5 text-3xl flex items-center justify-center bg-blue-400 mr-2">
                 {random_emoji(emoji_list)}
             </div>
             <div class="flex items-center w-full justify-between">

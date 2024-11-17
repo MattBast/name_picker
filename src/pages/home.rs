@@ -142,8 +142,8 @@ pub fn Home() -> impl IntoView {
     let picked = RwSignal::new(false);
 
     view! {
-        <div class="h-screen w-full flex flex-col">
-            <div class="flex-1 w-full flex justify-center items-start p-4 overflow-y-auto">
+        <div class="h-screen w-full flex flex-col border-t-2 border-yellow-400">
+            <div class="flex-1 w-full flex justify-center items-start p-10 overflow-y-auto">
                 <CardGrid people emoji_list/>
             </div>
 

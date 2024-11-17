@@ -47,7 +47,7 @@ where
             // The underline animation that appears when the user focusses on the
             // input.
             <div class="
-            absolute bottom-0 left-0 h-0.5 bg-blue-500
+            absolute bottom-0 left-0 h-0.5 bg-blue-400
             w-0 transition-[width] ease-in-out duration-300
             group-focus-within:w-full group-focus-visible:w-full
             "></div>

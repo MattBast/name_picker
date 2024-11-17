@@ -35,7 +35,7 @@ where
 {
     view! {
         <button
-            class="rounded-md bg-blue-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-500 focus:shadow-none active:bg-blue-500 hover:bg-blue-500 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+            class="rounded-md bg-pink-600 py-3.5 px-6 border border-transparent text-center text-base text-white transition-all shadow-md hover:shadow-lg focus:bg-pink-500 focus:shadow-none active:bg-pink-500 hover:bg-pink-500 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
             type="button"
             on:click=on_click
         >
