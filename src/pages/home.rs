@@ -1,4 +1,4 @@
-use crate::components::{BottomNav, NameCard};
+use crate::components::{BottomNav, FilledButton, NameCard};
 use crate::data::Person;
 use leptos::prelude::*;
 use rand::{seq::SliceRandom, thread_rng};
@@ -147,12 +147,28 @@ pub fn Home() -> impl IntoView {
                 <CardGrid people emoji_list/>
             </div>
 
-            <BottomNav
-                spin_function=move |_| random_card(people, picked)
-                new_function=move |_| new_card(people)
-                reset_function=move |_| reset_cards(people, picked)
-                picked
-            />
+            // Contains the buttons the user can use to add names, select random
+            // ones and reset the random selection.
+            <BottomNav>
+                <div class: hidden=move || picked.get()>
+                    <FilledButton on_click=move |_| random_card(people, picked)>
+                        <Icon icon=icondata::FaDiceSolid/>
+                        "Spin"
+                    </FilledButton>
+                </div>
+                <div class: hidden=move || picked.get()>
+                    <FilledButton on_click=move |_| new_card(people)>
+                        <Icon icon=icondata::AiPlusOutlined/>
+                        "Add a name"
+                    </FilledButton>
+                </div>
+                <div class: hidden=move || !picked.get()>
+                    <FilledButton on_click=move |_| reset_cards(people, picked)>
+                        <Icon icon=icondata::BsArrowCounterclockwise/>
+                        "Reset"
+                    </FilledButton>
+                </div>
+            </BottomNav>
         </div>
     }
 }

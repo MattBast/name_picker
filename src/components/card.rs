@@ -51,3 +51,22 @@ where
 fn random_emoji(emoji_list: Vec<String>) -> String {
     emoji_list.choose(&mut rand::thread_rng()).unwrap().clone()
 }
+
+// enum Color {
+//     Red,
+//     Orange,
+//     Yellow,
+//     Green,
+//     Lime,
+//     Emerald,
+//     Teal,
+//     Cyan,
+//     Sky,
+//     Blue,
+//     Indigo,
+//     Violet,
+//     Purple,
+//     Fuchasia,
+//     Pink,
+//     Rose,
+// }
