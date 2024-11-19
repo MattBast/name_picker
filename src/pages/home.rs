@@ -8,134 +8,134 @@ use uuid::Uuid;
 #[component]
 pub fn Home() -> impl IntoView {
     let people = RwSignal::new(Vec::new());
-    people.update(|names| {
-        names.push(Person {
-            id: Uuid::new_v4(),
-            name: RwSignal::new(String::from("Saburo")),
-            input_ref: NodeRef::new(),
-            picked: RwSignal::new(false),
-            not_picked: RwSignal::new(false),
-        });
-        names.push(Person {
-            id: Uuid::new_v4(),
-            name: RwSignal::new(String::from("Hanako")),
-            input_ref: NodeRef::new(),
-            picked: RwSignal::new(false),
-            not_picked: RwSignal::new(false),
-        });
-        names.push(Person {
-            id: Uuid::new_v4(),
-            name: RwSignal::new(String::from("Michiko")),
-            input_ref: NodeRef::new(),
-            picked: RwSignal::new(false),
-            not_picked: RwSignal::new(false),
-        });
-        names.push(Person {
-            id: Uuid::new_v4(),
-            name: RwSignal::new(String::from("Saburo")),
-            input_ref: NodeRef::new(),
-            picked: RwSignal::new(false),
-            not_picked: RwSignal::new(false),
-        });
-        names.push(Person {
-            id: Uuid::new_v4(),
-            name: RwSignal::new(String::from("Hanako")),
-            input_ref: NodeRef::new(),
-            picked: RwSignal::new(false),
-            not_picked: RwSignal::new(false),
-        });
-        names.push(Person {
-            id: Uuid::new_v4(),
-            name: RwSignal::new(String::from("Michiko")),
-            input_ref: NodeRef::new(),
-            picked: RwSignal::new(false),
-            not_picked: RwSignal::new(false),
-        });
-        names.push(Person {
-            id: Uuid::new_v4(),
-            name: RwSignal::new(String::from("Saburo")),
-            input_ref: NodeRef::new(),
-            picked: RwSignal::new(false),
-            not_picked: RwSignal::new(false),
-        });
-        names.push(Person {
-            id: Uuid::new_v4(),
-            name: RwSignal::new(String::from("Hanako")),
-            input_ref: NodeRef::new(),
-            picked: RwSignal::new(false),
-            not_picked: RwSignal::new(false),
-        });
-        names.push(Person {
-            id: Uuid::new_v4(),
-            name: RwSignal::new(String::from("Michiko")),
-            input_ref: NodeRef::new(),
-            picked: RwSignal::new(false),
-            not_picked: RwSignal::new(false),
-        });
-        names.push(Person {
-            id: Uuid::new_v4(),
-            name: RwSignal::new(String::from("Saburo")),
-            input_ref: NodeRef::new(),
-            picked: RwSignal::new(false),
-            not_picked: RwSignal::new(false),
-        });
-        names.push(Person {
-            id: Uuid::new_v4(),
-            name: RwSignal::new(String::from("Hanako")),
-            input_ref: NodeRef::new(),
-            picked: RwSignal::new(false),
-            not_picked: RwSignal::new(false),
-        });
-        names.push(Person {
-            id: Uuid::new_v4(),
-            name: RwSignal::new(String::from("Michiko")),
-            input_ref: NodeRef::new(),
-            picked: RwSignal::new(false),
-            not_picked: RwSignal::new(false),
-        });
-        names.push(Person {
-            id: Uuid::new_v4(),
-            name: RwSignal::new(String::from("Saburo")),
-            input_ref: NodeRef::new(),
-            picked: RwSignal::new(false),
-            not_picked: RwSignal::new(false),
-        });
-        names.push(Person {
-            id: Uuid::new_v4(),
-            name: RwSignal::new(String::from("Hanako")),
-            input_ref: NodeRef::new(),
-            picked: RwSignal::new(false),
-            not_picked: RwSignal::new(false),
-        });
-        names.push(Person {
-            id: Uuid::new_v4(),
-            name: RwSignal::new(String::from("Michiko")),
-            input_ref: NodeRef::new(),
-            picked: RwSignal::new(false),
-            not_picked: RwSignal::new(false),
-        });
-        names.push(Person {
-            id: Uuid::new_v4(),
-            name: RwSignal::new(String::from("Saburo")),
-            input_ref: NodeRef::new(),
-            picked: RwSignal::new(false),
-            not_picked: RwSignal::new(false),
-        });
-        names.push(Person {
-            id: Uuid::new_v4(),
-            name: RwSignal::new(String::from("Hanako")),
-            input_ref: NodeRef::new(),
-            picked: RwSignal::new(false),
-            not_picked: RwSignal::new(false),
-        });
-        names.push(Person {
-            id: Uuid::new_v4(),
-            name: RwSignal::new(String::from("Michiko")),
-            input_ref: NodeRef::new(),
-            picked: RwSignal::new(false),
-            not_picked: RwSignal::new(false),
-        });
-    });
+    // people.update(|names| {
+    //     names.push(Person {
+    //         id: Uuid::new_v4(),
+    //         name: RwSignal::new(String::from("Saburo")),
+    //         input_ref: NodeRef::new(),
+    //         picked: RwSignal::new(false),
+    //         not_picked: RwSignal::new(false),
+    //     });
+    //     names.push(Person {
+    //         id: Uuid::new_v4(),
+    //         name: RwSignal::new(String::from("Hanako")),
+    //         input_ref: NodeRef::new(),
+    //         picked: RwSignal::new(false),
+    //         not_picked: RwSignal::new(false),
+    //     });
+    //     names.push(Person {
+    //         id: Uuid::new_v4(),
+    //         name: RwSignal::new(String::from("Michiko")),
+    //         input_ref: NodeRef::new(),
+    //         picked: RwSignal::new(false),
+    //         not_picked: RwSignal::new(false),
+    //     });
+    //     names.push(Person {
+    //         id: Uuid::new_v4(),
+    //         name: RwSignal::new(String::from("Saburo")),
+    //         input_ref: NodeRef::new(),
+    //         picked: RwSignal::new(false),
+    //         not_picked: RwSignal::new(false),
+    //     });
+    //     names.push(Person {
+    //         id: Uuid::new_v4(),
+    //         name: RwSignal::new(String::from("Hanako")),
+    //         input_ref: NodeRef::new(),
+    //         picked: RwSignal::new(false),
+    //         not_picked: RwSignal::new(false),
+    //     });
+    //     names.push(Person {
+    //         id: Uuid::new_v4(),
+    //         name: RwSignal::new(String::from("Michiko")),
+    //         input_ref: NodeRef::new(),
+    //         picked: RwSignal::new(false),
+    //         not_picked: RwSignal::new(false),
+    //     });
+    //     names.push(Person {
+    //         id: Uuid::new_v4(),
+    //         name: RwSignal::new(String::from("Saburo")),
+    //         input_ref: NodeRef::new(),
+    //         picked: RwSignal::new(false),
+    //         not_picked: RwSignal::new(false),
+    //     });
+    //     names.push(Person {
+    //         id: Uuid::new_v4(),
+    //         name: RwSignal::new(String::from("Hanako")),
+    //         input_ref: NodeRef::new(),
+    //         picked: RwSignal::new(false),
+    //         not_picked: RwSignal::new(false),
+    //     });
+    //     names.push(Person {
+    //         id: Uuid::new_v4(),
+    //         name: RwSignal::new(String::from("Michiko")),
+    //         input_ref: NodeRef::new(),
+    //         picked: RwSignal::new(false),
+    //         not_picked: RwSignal::new(false),
+    //     });
+    //     names.push(Person {
+    //         id: Uuid::new_v4(),
+    //         name: RwSignal::new(String::from("Saburo")),
+    //         input_ref: NodeRef::new(),
+    //         picked: RwSignal::new(false),
+    //         not_picked: RwSignal::new(false),
+    //     });
+    //     names.push(Person {
+    //         id: Uuid::new_v4(),
+    //         name: RwSignal::new(String::from("Hanako")),
+    //         input_ref: NodeRef::new(),
+    //         picked: RwSignal::new(false),
+    //         not_picked: RwSignal::new(false),
+    //     });
+    //     names.push(Person {
+    //         id: Uuid::new_v4(),
+    //         name: RwSignal::new(String::from("Michiko")),
+    //         input_ref: NodeRef::new(),
+    //         picked: RwSignal::new(false),
+    //         not_picked: RwSignal::new(false),
+    //     });
+    //     names.push(Person {
+    //         id: Uuid::new_v4(),
+    //         name: RwSignal::new(String::from("Saburo")),
+    //         input_ref: NodeRef::new(),
+    //         picked: RwSignal::new(false),
+    //         not_picked: RwSignal::new(false),
+    //     });
+    //     names.push(Person {
+    //         id: Uuid::new_v4(),
+    //         name: RwSignal::new(String::from("Hanako")),
+    //         input_ref: NodeRef::new(),
+    //         picked: RwSignal::new(false),
+    //         not_picked: RwSignal::new(false),
+    //     });
+    //     names.push(Person {
+    //         id: Uuid::new_v4(),
+    //         name: RwSignal::new(String::from("Michiko")),
+    //         input_ref: NodeRef::new(),
+    //         picked: RwSignal::new(false),
+    //         not_picked: RwSignal::new(false),
+    //     });
+    //     names.push(Person {
+    //         id: Uuid::new_v4(),
+    //         name: RwSignal::new(String::from("Saburo")),
+    //         input_ref: NodeRef::new(),
+    //         picked: RwSignal::new(false),
+    //         not_picked: RwSignal::new(false),
+    //     });
+    //     names.push(Person {
+    //         id: Uuid::new_v4(),
+    //         name: RwSignal::new(String::from("Hanako")),
+    //         input_ref: NodeRef::new(),
+    //         picked: RwSignal::new(false),
+    //         not_picked: RwSignal::new(false),
+    //     });
+    //     names.push(Person {
+    //         id: Uuid::new_v4(),
+    //         name: RwSignal::new(String::from("Michiko")),
+    //         input_ref: NodeRef::new(),
+    //         picked: RwSignal::new(false),
+    //         not_picked: RwSignal::new(false),
+    //     });
+    // });
 
     let emoji_list = get_emojis();
 
@@ -143,25 +143,39 @@ pub fn Home() -> impl IntoView {
 
     view! {
         <div class="h-screen w-full flex flex-col border-t-2 border-yellow-400">
-            <div class="flex-1 w-full flex justify-center items-start p-10 overflow-y-auto">
+            // A container for the list of names. This container is hidden
+            // if the list contains no names.
+            <div
+                class="flex-1 w-full flex justify-center items-start p-10 overflow-y-auto"
+                class: hidden=move || people.get().is_empty()
+            >
                 <CardGrid people emoji_list/>
             </div>
 
             // Contains the buttons the user can use to add names, select random
             // ones and reset the random selection.
-            <BottomNav>
-                <div class: hidden=move || picked.get()>
+            <BottomNav people>
+                // Button to randomly select a name from the list. Is hidden if
+                // a random name has already been selected i.e. the button was
+                // clicked, or there are no names to pick from.
+                <div class: hidden=move || picked.get() || people.get().is_empty()>
                     <FilledButton on_click=move |_| random_card(people, picked)>
                         <Icon icon=icondata::FaDiceSolid/>
                         "Spin"
                     </FilledButton>
                 </div>
+                // Button to add a new name to the list. Clicking the button adds
+                // a new card to the people vector which should focus the user on
+                // its input field.
                 <div class: hidden=move || picked.get()>
                     <FilledButton on_click=move |_| new_card(people)>
                         <Icon icon=icondata::AiPlusOutlined/>
                         "Add a name"
                     </FilledButton>
                 </div>
+                // This button is only shown if a random name has been picked. This
+                // button unpicks the name so the user can add more names or randomly
+                // pick another.
                 <div class: hidden=move || !picked.get()>
                     <FilledButton on_click=move |_| reset_cards(people, picked)>
                         <Icon icon=icondata::BsArrowCounterclockwise/>
