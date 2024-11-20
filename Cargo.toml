@@ -9,6 +9,11 @@ leptos = { version = "0.7.0-beta5", features = ["csr"] }
 leptos_meta = { version = "^0.7.0-beta5" }
 leptos_router = { version = "^0.7.0-beta5" }
 thaw = { version = "0.4.0-beta3", features = ["csr"] }
+web-sys = { version = "0.3.7", features = [
+    "HtmlElement",
+    "Window",
+    "Document",
+] }
 
 icondata = "0.3.0"
 log = "0.4"

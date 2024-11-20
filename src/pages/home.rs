@@ -1,4 +1,4 @@
-use crate::components::{BottomNav, FilledButton, NameCard};
+use crate::components::{start_confetti, BottomNav, FilledButton, NameCard};
 use crate::data::Person;
 use leptos::prelude::*;
 use rand::{seq::SliceRandom, thread_rng};
@@ -13,8 +13,17 @@ pub fn Home() -> impl IntoView {
 
     let picked = RwSignal::new(false);
 
+    let confetti_container = NodeRef::<leptos::html::Div>::new();
+
     view! {
         <div class="h-screen w-full flex flex-col border-t-2 border-yellow-400">
+
+            // Generate confetti when the `start_confetti` function is called
+            <div
+                node_ref=confetti_container
+                style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000;"
+            />
+
             // A container for the list of names. This container is hidden
             // if the list contains no names.
             <div
@@ -31,7 +40,10 @@ pub fn Home() -> impl IntoView {
                 // a random name has already been selected i.e. the button was
                 // clicked, or there are no names to pick from.
                 <div class: hidden=move || picked.get() || people.get().is_empty()>
-                    <FilledButton on_click=move |_| random_card(people, picked)>
+                    <FilledButton on_click=move |_| {
+                        random_card(people, picked);
+                        start_confetti(confetti_container.clone());
+                    }>
                         <Icon icon=icondata::FaDiceSolid/>
                         "Spin"
                     </FilledButton>
