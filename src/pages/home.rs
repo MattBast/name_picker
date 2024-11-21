@@ -39,12 +39,12 @@ pub fn Home() -> impl IntoView {
                 // Button to randomly select a name from the list. Is hidden if
                 // a random name has already been selected i.e. the button was
                 // clicked, or there are no names to pick from.
-                <div class: hidden=move || picked.get() || people.get().is_empty()>
+                <div class: hidden=move || picked.get() || (people.get().len() < 2)>
                     <FilledButton on_click=move |_| {
                         random_card(people, picked);
                         start_confetti(confetti_container.clone());
                     }>
-                        <Icon icon=icondata::FaDiceSolid/>
+                        <Icon icon=icondata::FaDiceSolid class="w-5 h-5 mr-1.5"/>
                         "Spin"
                     </FilledButton>
                 </div>
@@ -53,7 +53,7 @@ pub fn Home() -> impl IntoView {
                 // its input field.
                 <div class: hidden=move || picked.get()>
                     <FilledButton on_click=move |_| new_card(people)>
-                        <Icon icon=icondata::AiPlusOutlined/>
+                        <Icon icon=icondata::AiPlusOutlined class="w-4 h-4 mr-1.5"/>
                         "Add a name"
                     </FilledButton>
                 </div>
@@ -62,7 +62,7 @@ pub fn Home() -> impl IntoView {
                 // pick another.
                 <div class: hidden=move || !picked.get()>
                     <FilledButton on_click=move |_| reset_cards(people, picked)>
-                        <Icon icon=icondata::BsArrowCounterclockwise/>
+                        <Icon icon=icondata::BsArrowCounterclockwise class="w-4 h-4 mr-1.5"/>
                         "Reset"
                     </FilledButton>
                 </div>
