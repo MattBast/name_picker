@@ -21,7 +21,7 @@ where
 {
     view! {
         <div
-            class="relative flex flex-col md:flex-row w-full my-2 bg-white shadow-sm border border-slate-200 rounded-lg w-96 transition-all overflow-hidden"
+            class="flex-initial flex flex-col md:flex-row w-full my-2 bg-white shadow-sm border border-slate-200 rounded-lg w-96 transition-all overflow-hidden"
             class: opacity-50=move || not_picked.get()
             class: scale-95=move || not_picked.get()
             class: scale-105=move || picked.get()

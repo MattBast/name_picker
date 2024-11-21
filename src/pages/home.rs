@@ -74,7 +74,7 @@ pub fn Home() -> impl IntoView {
 #[component]
 pub fn CardGrid(people: RwSignal<Vec<Person>>, emoji_list: Vec<String>) -> impl IntoView {
     view! {
-        <Flex gap=FlexGap::Small justify=FlexJustify::Center class="flex-wrap">
+        <div class="flex flex-wrap gap-1 justify-center w-full">
             // Create one card for every name.
             <For each=move || people.get() key=|person| person.id let:person>
                 <NameCard
@@ -110,7 +110,7 @@ pub fn CardGrid(people: RwSignal<Vec<Person>>, emoji_list: Vec<String>) -> impl 
                     node_ref=person.input_ref
                 />
             </For>
-        </Flex>
+        </div>
     }
 }
 
