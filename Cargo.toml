@@ -8,9 +8,10 @@ rust-version = "1.82"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-leptos = { version = "0.7.0-beta5" }
-leptos_meta = { version = "^0.7.0-beta5" }
-leptos_router = { version = "^0.7.0-beta5" }
+leptos = { version = "0.7.0-rc1" }
+leptos_meta = { version = "0.7.0-rc1" }
+leptos_router = { version = "0.7.0-rc1" }
+leptos_axum = { version = "0.7.0-rc1", optional = true }
 thaw = { version = "0.4.0-beta3", features = ["ssr", "hydrate"] }
 web-sys = { version = "0.3.7", features = [
     "HtmlElement",
@@ -26,7 +27,6 @@ wasm-bindgen = { version = "0.2.95" }
 console_log = { version = "1" }
 console_error_panic_hook = { version = "0.1.7" }
 axum = { version = "0.7", optional = true }
-leptos_axum = { version = "0.7.0-beta5", optional = true }
 tokio = { version = "1", features = ["rt-multi-thread"], optional = true }
 tower = { version = "0.4", optional = true }
 tower-http = { version = "0.5", features = ["fs"], optional = true }
@@ -67,6 +67,11 @@ site-root = "target/site"
 # The site-root relative folder where all compiled output (JS, WASM and CSS) is written
 # Defaults to pkg
 site-pkg-dir = "pkg"
+
+# The tailwind input file.
+#
+# Optional, Activates the tailwind build
+tailwind-input-file = "style/tailwind.css"
 
 # [Optional] The source CSS file. If it ends with .sass or .scss then it will be compiled by dart-sass into CSS. The CSS is optimized by Lightning CSS before being written to <site-root>/<site-pkg>/app.css
 style-file = "style/tailwind.css"
