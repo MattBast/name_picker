@@ -16,5 +16,9 @@ leptosfmt ./**/*.rs
 
 Run in dev mode:
 ```bash
-trunk serve --open
+cargo leptos watch
 ```
+
+May also need to install these:
+`rustup target add wasm32-unknown-unknown`
+`cargo install cargo-generate`

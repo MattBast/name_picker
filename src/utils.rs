@@ -1,4 +1,5 @@
 use crate::data::Person;
+use leptos::logging::log;
 use leptos::prelude::*;
 use rand::{seq::SliceRandom, thread_rng};
 use uuid::Uuid;
