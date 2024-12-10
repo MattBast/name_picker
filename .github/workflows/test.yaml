@@ -1,0 +1,35 @@
+name: Test
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-image:
+    name: Test Docker Image Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag name-picker:$(date +%s)
+
+  build-rust:
+    name: Test Rust code
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check
+        run: cargo check --verbose --all-targets --all-features
+      - name: Run clippy checks
+        run: cargo clippy -- -D warnings
+      - name: Run fmt checks
+        run: cargo fmt --check
+      - name: Run unit tests
+        run: cargo test --verbose --all-targets
