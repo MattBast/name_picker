@@ -36,7 +36,7 @@ pub fn random_card(people: RwSignal<Vec<Person>>, picked: RwSignal<bool>) {
             picked_person.picked.set(true);
             // Scroll to the the picked persons card.
             if let Some(input) = picked_person.input_ref.get_untracked() {
-                let _ = input.scroll_into_view();
+                input.scroll_into_view();
             }
             // Set all other people to not_picked so their style hides
             // them from the user.

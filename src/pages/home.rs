@@ -40,7 +40,7 @@ pub fn Home() -> impl IntoView {
                 <div class: hidden=move || picked.get() || (people.get().len() < 2)>
                     <FilledButton on_click=move |_| {
                         random_card(people, picked);
-                        start_confetti(confetti_container.clone());
+                        start_confetti(confetti_container);
                     }>
                         <Icon icon=icondata::FaDiceSolid class="w-5 h-5 mr-1.5"/>
                         "Spin"

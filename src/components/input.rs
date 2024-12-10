@@ -38,7 +38,7 @@ where
                 // it's a strange hack but the underline animation that triggers
                 // on a focus event doesn't trigger unless this focus listener
                 // is added (even though it's returning none).
-                on:focus=move |_| { () }
+                on:focus=move |_| { }
                 // Bubble up a blue event
                 on:blur=on_blur_event
                 // Bubble up a keydown event

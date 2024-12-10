@@ -11,10 +11,7 @@ pub fn TransparentButton<F>(
 where
     F: Fn(MouseEvent) + 'static,
 {
-    let button_text = match text {
-        Some(t) => t,
-        None => String::new(),
-    };
+    let button_text = text.unwrap_or_default();
 
     view! {
         <button
