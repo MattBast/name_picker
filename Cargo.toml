@@ -8,10 +8,10 @@ rust-version = "1.82"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-leptos = "0.7.0"
-leptos_meta = "0.7.0"
-leptos_router = "0.7.0"
-leptos_axum = { version = "0.7.0", optional = true }
+leptos = { version = "0.7", features = ["ssr"] }
+leptos_meta = { version = "0.7", features = ["ssr"] }
+leptos_router = { version = "0.7", features = ["ssr"] }
+leptos_axum = { version = "0.7", optional = true }
 thaw = { version = "0.4.0-beta3", features = ["ssr", "hydrate"] }
 web-sys = { version = "0.3.72", features = [
     "HtmlElement",
@@ -92,7 +92,7 @@ reload-port = 3001
 # [Optional] Command to use when running end2end tests. It will run in the end2end dir.
 #   [Windows] for non-WSL use "npx.cmd playwright test"
 #   This binary name can be checked in Powershell with Get-Command npx
-end2end-cmd = "npx playwright test"
+end2end-cmd = "npx playwright test --reporter=line"
 end2end-dir = "end2end"
 
 #  The browserlist query used for optimizing the CSS.

@@ -1,6 +1,6 @@
 use crate::pages::Home;
 use leptos::prelude::*;
-use leptos_meta::{provide_meta_context, Meta, MetaTags, Stylesheet, Title};
+use leptos_meta::*;
 use leptos_router::{
     components::{Route, Router, Routes},
     StaticSegment,
@@ -12,7 +12,7 @@ pub fn App() -> impl IntoView {
     provide_meta_context();
 
     view! {
-        <Title formatter=|text| format!("Taak | {text}")/>
+        <Title text="Random.Pick"/>
 
         // injects a stylesheet into the document <head>
         // id=leptos means cargo-leptos will hot-reload this stylesheet

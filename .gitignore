@@ -21,3 +21,8 @@ Cargo.lock
 #.idea/
 
 dist
+
+# Ignore anything accidentally created by the end2end tests.
+package.json
+package-lock.json
+/node_modules/

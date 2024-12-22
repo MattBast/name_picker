@@ -30,3 +30,19 @@ This command is not yet used in the pipeline but can be used to standardise the 
 ```bash
 leptosfmt ./**/*.rs
 ```
+
+Use this command to run the end to end tests. These tests use Playwright to open the website, click around and make sure the content renders okay.
+```bash
+cargo leptos end-to-end
+```
+As Playwright is required, you will likely need to install it first. Go to the `end2end` directory and install all the required packages.
+```bash
+cd end2end
+npm install
+npm init playwright@latest
+```
+
+and the `--release` flag can be added to check the production build. This is the command that should be used in the CI pipeline.
+```bash
+cargo leptos end-to-end --release
+```
