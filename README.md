@@ -42,6 +42,13 @@ npm install
 npm init playwright@latest
 ```
 
+You can also debug tests by using the playwright ui. This requires running the manual steps that sit underneath `cargo leptos end-to-end`:
+```bash
+cargo leptos watch
+cd end2end
+npx playwright test --ui
+```
+
 and the `--release` flag can be added to check the production build. This is the command that should be used in the CI pipeline.
 ```bash
 cargo leptos end-to-end --release

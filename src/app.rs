@@ -1,6 +1,6 @@
 use crate::pages::Home;
 use leptos::prelude::*;
-use leptos_meta::*;
+use leptos_meta::{provide_meta_context, Meta, MetaTags, Stylesheet, Title};
 use leptos_router::{
     components::{Route, Router, Routes},
     StaticSegment,
