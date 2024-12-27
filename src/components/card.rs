@@ -22,7 +22,13 @@ where
     view! {
         <div
             class="flex-initial flex md:flex-row w-full my-2 bg-white shadow-sm border border-slate-200 rounded-lg w-96 transition-all overflow-hidden"
-            data-testid="card"
+            data-testid=move || {
+                if picked.get() {
+                    "card"
+                } else {
+                    "picked-card"
+                }
+            }
             class: opacity-50=move || not_picked.get()
             class: scale-95=move || not_picked.get()
             class: scale-105=move || picked.get()
