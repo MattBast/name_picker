@@ -33,3 +33,37 @@ jobs:
         run: cargo fmt --check
       - name: Run unit tests
         run: cargo test --verbose --all-targets
+
+  end-to-end-tests:
+    name: End to end tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      LEPTOS_WASM_OPT_VERSION: "0.2.95"
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - uses: cargo-bins/cargo-binstall@main
+        with:
+          node-version: lts/*
+      - name: Install dependencies
+        working-directory: ./end2end
+        run: npm install
+      - name: Install Playwright Browsers
+        working-directory: ./end2end
+        run: npx playwright install --with-deps
+      - name: Install cargo leptos
+        run: cargo binstall cargo-leptos@0.2.21 -y
+      - name: Add wasm32-unknonw-unknown
+        run: rustup target add wasm32-unknown-unknown
+      - name: Update wasm-bindgen version
+        run: cargo update -p wasm-bindgen --precise 0.2.95
+      - name: Install cargo-generate
+        run: cargo binstall cargo-generate
+      - name: Install binaryen
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y binaryen
+      - name: Run Playwright tests
+        run: cargo leptos end-to-end --release
