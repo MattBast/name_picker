@@ -53,3 +53,15 @@ and the `--release` flag can be added to check the production build. This is the
 ```bash
 cargo leptos end-to-end --release
 ```
+
+Sometimes port 3000 gets reserved after running leptos commands a gew times.
+So if the "Address already in use" error appears, try killing the process
+occupying the port. Start by find the process PID:
+```bash
+lsof -i :3000
+```
+
+and then killing the process with the PID you found:
+```bash
+kill <PID>
+```

@@ -10,7 +10,7 @@ import { test, expect } from "@playwright/test";
 
 test("homepage disappears when an item is added to list", async ({ page }) => {
   await page.goto("http://localhost:3000");
-  await page.waitForTimeout(1000); // Firefox requires a delay
+  await page.waitForLoadState("networkidle"); // Firefox requires a delay
 
   // the headings are visible when the page first opens
   await expect(page.getByText("Name Picker")).toBeVisible();
@@ -31,7 +31,7 @@ test("an item is added to the list when the add button is clicked", async ({
   page,
 }) => {
   await page.goto("http://localhost:3000");
-  await page.waitForTimeout(1000); // Firefox requires a delay
+  await page.waitForLoadState("networkidle"); // Firefox requires a delay
 
   // make sure no cards are visible to the user when the page first opens
   await expect(page.getByTestId("card")).toHaveCount(0);
@@ -47,7 +47,7 @@ test("list items disappear when they are empty and blurred (not focussed)", asyn
   page,
 }) => {
   await page.goto("http://localhost:3000");
-  await page.waitForTimeout(1000); // Firefox requires a delay
+  await page.waitForLoadState("networkidle"); // Firefox requires a delay
 
   // add item to list
   await page.getByRole("button", { name: "Add a name" }).click();
@@ -73,7 +73,7 @@ test("list items remains visible after a name is added to it", async ({
   page,
 }) => {
   await page.goto("http://localhost:3000");
-  await page.waitForTimeout(1000); // Firefox requires a delay
+  await page.waitForLoadState("networkidle"); // Firefox requires a delay
 
   // add item to list
   await page.getByRole("button", { name: "Add a name" }).click();
@@ -90,7 +90,7 @@ test("list items is deleted when its delete button is clicked", async ({
   page,
 }) => {
   await page.goto("http://localhost:3000");
-  await page.waitForTimeout(1000); // Firefox requires a delay
+  await page.waitForLoadState("networkidle"); // Firefox requires a delay
 
   // add item to list
   await page.getByRole("button", { name: "Add a name" }).click();
@@ -107,7 +107,7 @@ test("list item is blurred and deleted when Escape key is pressed and the card i
   page,
 }) => {
   await page.goto("http://localhost:3000");
-  await page.waitForTimeout(1000); // Firefox requires a delay
+  await page.waitForLoadState("networkidle"); // Firefox requires a delay
 
   // add item to list
   await page.getByRole("button", { name: "Add a name" }).click();
@@ -122,7 +122,7 @@ test("list item is blurred and deleted when Escape key is pressed and the card i
 
 test("list item is blurred when Escape key is pressed", async ({ page }) => {
   await page.goto("http://localhost:3000");
-  await page.waitForTimeout(1000); // Firefox requires a delay
+  await page.waitForLoadState("networkidle"); // Firefox requires a delay
 
   // add item to list
   await page.getByRole("button", { name: "Add a name" }).click();
@@ -139,7 +139,7 @@ test("a new list item is created after user presses enter while focussed on an e
   page,
 }) => {
   await page.goto("http://localhost:3000");
-  await page.waitForTimeout(1000); // Firefox requires a delay
+  await page.waitForLoadState("networkidle"); // Firefox requires a delay
 
   // add item to list
   await page.getByRole("button", { name: "Add a name" }).click();
@@ -156,7 +156,7 @@ test("a new list item is created after user presses tab while focussed on an exi
   page,
 }) => {
   await page.goto("http://localhost:3000");
-  await page.waitForTimeout(1000); // Firefox requires a delay
+  await page.waitForLoadState("networkidle"); // Firefox requires a delay
 
   // add item to list
   await page.getByRole("button", { name: "Add a name" }).click();
@@ -173,7 +173,7 @@ test("the next list item is focussed after user presses tab", async ({
   page,
 }) => {
   await page.goto("http://localhost:3000");
-  await page.waitForTimeout(1000); // Firefox requires a delay
+  await page.waitForLoadState("networkidle"); // Firefox requires a delay
 
   // add item to list
   await page.getByRole("button", { name: "Add a name" }).click();
@@ -195,7 +195,7 @@ test("the next list item is focussed after user presses enter", async ({
   page,
 }) => {
   await page.goto("http://localhost:3000");
-  await page.waitForTimeout(1000); // Firefox requires a delay
+  await page.waitForLoadState("networkidle"); // Firefox requires a delay
 
   // add item to list
   await page.getByRole("button", { name: "Add a name" }).click();
@@ -217,7 +217,7 @@ test("previous list item is focussed when shift+tab is pressed", async ({
   page,
 }) => {
   await page.goto("http://localhost:3000");
-  await page.waitForTimeout(1000); // Firefox requires a delay
+  await page.waitForLoadState("networkidle"); // Firefox requires a delay
 
   // add item to list
   await page.getByRole("button", { name: "Add a name" }).click();
@@ -240,7 +240,7 @@ test("the spin button is only visible when there are two or more list items", as
   page,
 }) => {
   await page.goto("http://localhost:3000");
-  await page.waitForTimeout(1000); // Firefox requires a delay
+  await page.waitForLoadState("networkidle"); // Firefox requires a delay
 
   // add item to list
   await page.getByRole("button", { name: "Add a name" }).click();
@@ -259,7 +259,7 @@ test("the spin button is only visible when there are two or more list items", as
 
 test("the spin button is hidden after it's clicked", async ({ page }) => {
   await page.goto("http://localhost:3000");
-  await page.waitForTimeout(1000); // Firefox requires a delay
+  await page.waitForLoadState("networkidle"); // Firefox requires a delay
 
   // add item to list
   await page.getByRole("button", { name: "Add a name" }).click();
@@ -280,7 +280,7 @@ test("the reset button is visible after the spin button is clicked", async ({
   page,
 }) => {
   await page.goto("http://localhost:3000");
-  await page.waitForTimeout(1000); // Firefox requires a delay
+  await page.waitForLoadState("networkidle"); // Firefox requires a delay
 
   // add item to list
   await page.getByRole("button", { name: "Add a name" }).click();
@@ -301,7 +301,7 @@ test("not picked cards have half opacity after spin is clicked", async ({
   page,
 }) => {
   await page.goto("http://localhost:3000");
-  await page.waitForTimeout(1000); // Firefox requires a delay
+  await page.waitForLoadState("networkidle"); // Firefox requires a delay
 
   // add item to list
   await page.getByRole("button", { name: "Add a name" }).click();
@@ -316,7 +316,7 @@ test("not picked cards have half opacity after spin is clicked", async ({
 
   // make sure a card was picked
   await expect(page.getByTestId("picked-card")).toHaveCount(1);
-  await expect(page.getByTestId("card")).toHaveCSS("opacity", ".5");
+  await expect(page.getByTestId("card")).toHaveCSS("opacity", "0.5");
 });
 
 // add a test for making sure the inputs are disapled when spin is clicked.

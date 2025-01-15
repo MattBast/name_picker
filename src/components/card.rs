@@ -24,9 +24,9 @@ where
             class="flex-initial flex md:flex-row w-full my-2 bg-white shadow-sm border border-slate-200 rounded-lg w-96 transition-all overflow-hidden"
             data-testid=move || {
                 if picked.get() {
-                    "card"
-                } else {
                     "picked-card"
+                } else {
+                    "card"
                 }
             }
             class: opacity-50=move || not_picked.get()

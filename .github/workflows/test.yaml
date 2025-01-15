@@ -44,18 +44,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-      - uses: cargo-bins/cargo-binstall@main
         with:
           node-version: lts/*
+      - uses: cargo-bins/cargo-binstall@main
       - name: Install dependencies
         working-directory: ./end2end
-        run: npm install
+        run: npm ci
       - name: Install Playwright Browsers
         working-directory: ./end2end
         run: npx playwright install --with-deps
       - name: Install cargo leptos
         run: cargo binstall cargo-leptos@0.2.21 -y
-      - name: Add wasm32-unknonw-unknown
+      - name: Add wasm32-unknown-unknown
         run: rustup target add wasm32-unknown-unknown
       - name: Update wasm-bindgen version
         run: cargo update -p wasm-bindgen --precise 0.2.95
