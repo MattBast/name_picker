@@ -1,12 +1,9 @@
 import { test, expect } from "@playwright/test";
 
-// **********************************************************************
-// make sure to re-add the title test once the title issue is resolved
-// **********************************************************************
-// test("homepage has title", async ({ page }) => {
-//   await page.goto("http://localhost:3000");
-//   await expect(page).toHaveTitle("Random.Pick");
-// });
+test("homepage has title", async ({ page }) => {
+  await page.goto("http://localhost:3000");
+  await expect(page).toHaveTitle("Random.Pick");
+});
 
 test("homepage disappears when an item is added to list", async ({ page }) => {
   await page.goto("http://localhost:3000");

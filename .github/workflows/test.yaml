@@ -10,14 +10,37 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build-image:
-    name: Test Docker Image Build
+  build-and-smoke-test-image:
+    name: Build Docker Image and Smoke Test
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag name-picker:$(date +%s)
+        run: docker build . --file Dockerfile --tag name-picker
+      - name: Run the app in the Docker image
+        run: docker run --rm -d -p 3000:3000 --name test-run name-picker
+
+      - name: Install dependencies
+        working-directory: ./end2end
+        run: npm ci
+      - name: Install Playwright Browsers
+        working-directory: ./end2end
+        run: npx playwright install --with-deps
+      - name: Run Playwright tests
+        working-directory: ./end2end
+        run: npx playwright test --reporter=line --max-failures=1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: end2end/playwright-report/
+          retention-days: 30
 
   build-rust:
     name: Test Rust code
@@ -33,43 +56,3 @@ jobs:
         run: cargo fmt --check
       - name: Run unit tests
         run: cargo test --verbose --all-targets
-
-  end-to-end-tests:
-    name: End to end tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    env:
-      LEPTOS_WASM_OPT_VERSION: "0.2.95"
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-      - uses: cargo-bins/cargo-binstall@main
-      - name: Install dependencies
-        working-directory: ./end2end
-        run: npm ci
-      - name: Install Playwright Browsers
-        working-directory: ./end2end
-        run: npx playwright install --with-deps
-      - name: Install cargo leptos
-        run: cargo binstall cargo-leptos@0.2.21 -y
-      - name: Add wasm32-unknown-unknown
-        run: rustup target add wasm32-unknown-unknown
-      - name: Update wasm-bindgen version
-        run: cargo update -p wasm-bindgen --precise 0.2.95
-      - name: Install cargo-generate
-        run: cargo binstall cargo-generate
-      - name: Install binaryen
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y binaryen
-      - name: Run Playwright tests
-        run: cargo leptos end-to-end --release
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
