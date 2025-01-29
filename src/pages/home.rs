@@ -1,4 +1,4 @@
-use crate::components::{start_confetti, BottomNav, CardGrid, FilledButton};
+use crate::components::{start_confetti, BottomNav, CardGrid, FilledButton, IntroTile};
 use crate::utils::*;
 use leptos::prelude::*;
 use thaw::*;
@@ -14,7 +14,7 @@ pub fn Home() -> impl IntoView {
     let confetti_container = NodeRef::<leptos::html::Div>::new();
 
     view! {
-        <div class="h-screen w-full flex flex-col border-t-2 border-yellow-400">
+        <div class="h-screen w-full flex flex-col bg-gray-100">
 
             // Generate confetti when the `start_confetti` function is called
             <div
@@ -22,10 +22,14 @@ pub fn Home() -> impl IntoView {
                 style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000;"
             />
 
+            // An intro page that shows when the user has not yet
+            // added any items to the list.
+            <IntroTile people/>
+
             // A container for the list of names. This container is hidden
             // if the list contains no names.
             <div
-                class="flex-1 w-full flex justify-center items-start p-10 overflow-y-auto"
+                class="flex-1 w-auto flex justify-center items-start p-10 overflow-y-auto rounded-md m-2 bg-gradient-to-br from-amber-100 from-20% via-pink-100 to-fuchsia-100"
                 class: hidden=move || people.get().is_empty()
             >
                 <CardGrid people emoji_list/>
@@ -33,7 +37,7 @@ pub fn Home() -> impl IntoView {
 
             // Contains the buttons the user can use to add names, select random
             // ones and reset the random selection.
-            <BottomNav people>
+            <BottomNav>
                 // Button to randomly select a name from the list. Is hidden if
                 // a random name has already been selected i.e. the button was
                 // clicked, or there are no names to pick from.
