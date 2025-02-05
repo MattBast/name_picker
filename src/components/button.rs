@@ -32,7 +32,7 @@ where
 {
     view! {
         <button
-            class="rounded-md bg-slate-900 py-3.5 px-6 border border-transparent text-center text-base text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-800 focus:shadow-none active:bg-slate-800 hover:bg-slate-800 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+            class="w-full rounded-md bg-slate-900 py-3.5 px-6 border border-transparent text-center text-base text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-800 focus:shadow-none active:bg-slate-800 hover:bg-slate-800 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
             type="button"
             on:click=on_click
         >

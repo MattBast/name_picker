@@ -14,7 +14,7 @@ pub fn Home() -> impl IntoView {
     let confetti_container = NodeRef::<leptos::html::Div>::new();
 
     view! {
-        <div class="h-screen w-full flex flex-col bg-gray-100">
+        <div class="h-screen w-full flex flex-col md:flex-row bg-gray-100">
 
             // Generate confetti when the `start_confetti` function is called
             <div
@@ -42,7 +42,10 @@ pub fn Home() -> impl IntoView {
                 // Button to randomly select a name from the list. Is hidden if
                 // a random name has already been selected i.e. the button was
                 // clicked, or there are no names to pick from.
-                <div class: hidden=move || picked.get() || (people.get().len() < 2)>
+                <div
+                    class: hidden=move || picked.get() || (people.get().len() < 2)
+                    class="w-40"
+                >
                     <FilledButton on_click=move |_| {
                         random_card(people, picked);
                         start_confetti(confetti_container);
@@ -54,7 +57,10 @@ pub fn Home() -> impl IntoView {
                 // Button to add a new name to the list. Clicking the button adds
                 // a new card to the people vector which should focus the user on
                 // its input field.
-                <div class: hidden=move || picked.get()>
+                <div
+                    class: hidden=move || picked.get()
+                    class="w-40"
+                >
                     <FilledButton on_click=move |_| new_card(people)>
                         <Icon icon=icondata::AiPlusOutlined class="w-4 h-4 mr-1.5"/>
                         "Add a name"
@@ -63,7 +69,10 @@ pub fn Home() -> impl IntoView {
                 // This button is only shown if a random name has been picked. This
                 // button unpicks the name so the user can add more names or randomly
                 // pick another.
-                <div class: hidden=move || !picked.get()>
+                <div
+                    class: hidden=move || !picked.get()
+                    class="w-40"
+                >
                     <FilledButton on_click=move |_| reset_cards(people, picked)>
                         <Icon icon=icondata::BsArrowCounterclockwise class="w-4 h-4 mr-1.5"/>
                         "Reset"
