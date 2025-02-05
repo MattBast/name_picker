@@ -22,16 +22,17 @@ pub fn Home() -> impl IntoView {
                 style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000;"
             />
 
-            // An intro page that shows when the user has not yet
-            // added any items to the list.
-            <IntroTile people/>
-
-            // A container for the list of names. This container is hidden
-            // if the list contains no names.
+            // A tile that contains the website intro or cards depending on
+            // whether any card exist or not.
             <div
-                class="flex-1 w-auto flex justify-center items-start p-10 overflow-y-auto rounded-md m-2 bg-gradient-to-br from-amber-100 from-20% via-pink-100 to-fuchsia-100"
-                class: hidden=move || people.get().is_empty()
+                class="flex-1 overflow-y-auto p-10 rounded-md m-2 bg-gradient-to-br from-amber-100 from-20% via-pink-100 to-fuchsia-100"
             >
+                // An intro page that shows when the user has not yet
+                // added any items to the list.
+                <IntroTile people/>
+
+                // A container for the list of names. This container is hidden
+                // if the list contains no names.
                 <CardGrid people emoji_list/>
             </div>
 

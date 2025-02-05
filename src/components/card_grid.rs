@@ -6,7 +6,10 @@ use leptos::prelude::*;
 #[component]
 pub fn CardGrid(people: RwSignal<Vec<Person>>, emoji_list: Vec<String>) -> impl IntoView {
     view! {
-        <div class="flex flex-wrap gap-1 justify-center w-full">
+        <div
+            class="flex flex-wrap gap-1 justify-center w-full"
+            class: hidden=move || people.get().is_empty()
+        >
             // Create one card for every name.
             <For each=move || people.get() key=|person| person.id let:person>
                 <NameCard
