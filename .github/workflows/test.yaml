@@ -48,11 +48,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: Machete
+        uses: bnjbvr/cargo-machete@main
+
       - name: Check
         run: cargo check --verbose --all-targets --all-features
       - name: Run clippy checks
         run: cargo clippy -- -D warnings
       - name: Run fmt checks
         run: cargo fmt --check
+      - name: Check for unused crates
+        run: cargo machete
       - name: Run unit tests
         run: cargo test --verbose --all-targets
