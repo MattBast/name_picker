@@ -17,7 +17,6 @@ rand = "0.8"
 # The "js" feature makes  the uuid crate WASM compatible. Removing
 # it can cause unexpected errors when the crate is used.
 uuid = { version = "1.11", features = ["v4", "js"] }
-wasm-bindgen = "0.2"
 console_log = { version = "1" }
 console_error_panic_hook = { version = "0.1" }
 
