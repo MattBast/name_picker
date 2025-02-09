@@ -5,12 +5,15 @@ A single page website built using Leptos that that allows users to type a list o
 
 Run this command to open the website in dev mode and listen for changes in the codebase. The page will reload whenever a change is detected:
 ```bash
-cargo leptos watch
+trunk serve --open
 ```
 
 May also need to install these if the above fails:
-`rustup target add wasm32-unknown-unknown`
-`cargo install cargo-generate`
+```bash
+cargo install trunk
+rustup target add wasm32-unknown-unknown
+cargo install cargo-generate
+```
 
 To test if a release version can be built and run, try these commands:
 ```bash
@@ -31,27 +34,17 @@ This command is not yet used in the pipeline but can be used to standardise the 
 leptosfmt ./**/*.rs
 ```
 
-Use this command to run the end to end tests. These tests use Playwright to open the website, click around and make sure the content renders okay.
+Use these commands to run the end to end tests. These tests use Playwright to open the website, click around and make sure the content renders okay.
 ```bash
-cargo leptos end-to-end
+trunk serve
+cd end2end
+npx playwright test --reporter=line --max-failures=1
 ```
 As Playwright is required, you will likely need to install it first. Go to the `end2end` directory and install all the required packages.
 ```bash
 cd end2end
 npm install
 npm init playwright@latest
-```
-
-You can also debug tests by using the playwright ui. This requires running the manual steps that sit underneath `cargo leptos end-to-end`:
-```bash
-cargo leptos watch
-cd end2end
-npx playwright test --ui
-```
-
-and the `--release` flag can be added to check the production build. This is the command that should be used in the CI pipeline.
-```bash
-cargo leptos end-to-end --release
 ```
 
 Sometimes port 3000 gets reserved after running leptos commands a gew times.
