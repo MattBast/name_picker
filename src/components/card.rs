@@ -6,7 +6,7 @@ use rand::seq::SliceRandom;
 #[component]
 pub fn NameCard<F, M, B>(
     name: RwSignal<String>,
-    emoji_list: Vec<String>,
+    emoji_list: RwSignal<Vec<String>>,
     picked: RwSignal<bool>,
     not_picked: RwSignal<bool>,
     on_keyboard_event: F,
@@ -35,7 +35,7 @@ where
         >
             // The random emoji that provides a visual identity for the person.
             <div class="flex-none px-4 py-2.5 text-3xl flex items-center justify-center bg-blue-400 mr-2">
-                {random_emoji(emoji_list)}
+                {random_emoji(emoji_list.get())}
             </div>
             <div class="flex-auto flex items-center justify-between">
                 // The editable persons name.

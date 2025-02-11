@@ -7,18 +7,20 @@ use thaw::Icon;
 pub fn Home() -> impl IntoView {
     let people = RwSignal::new(Vec::new());
 
-    let emoji_list = get_emojis();
+    let emoji_list = RwSignal::new(get_emojis(emojis::Group::SmileysAndEmotion));
 
     let picked = RwSignal::new(false);
 
     let confetti_container = NodeRef::<leptos::html::Div>::new();
 
-    let selected_emoji_group = RwSignal::new(String::from("🚀 Rocket"));
-    let emoji_groups = RwSignal::new(vec![
-        String::from("🚀 Rocket"),
-        String::from("🤌 Gesture"),
-        String::from("🍇 Grapes"),
-    ]);
+    let selected_emoji_group = RwSignal::new(String::from("😀 Smileys & Emotion"));
+    let emoji_groups = RwSignal::new(get_emoji_groups());
+    // Create an effect that runs whenever selected_emoji_group changes
+    Effect::new(move |_| {
+        let emoji = selected_emoji_group.get();
+        let new_group = emoji_to_group(emoji);
+        emoji_list.set(get_emojis(new_group));
+    });
 
     view! {
         <div class="h-screen w-full flex flex-col md:flex-row bg-gray-100">

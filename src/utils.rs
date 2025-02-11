@@ -4,13 +4,31 @@ use leptos::prelude::*;
 use rand::{seq::SliceRandom, thread_rng};
 use uuid::Uuid;
 
-pub fn get_emojis() -> Vec<String> {
-    emojis::Group::SmileysAndEmotion
+pub fn get_emojis(group: emojis::Group) -> Vec<String> {
+    group
         .emojis()
         .filter(|e| e.unicode_version() < emojis::UnicodeVersion::new(13, 0))
         .map(|e| e.as_str().to_owned())
-        // .take(30)
         .collect()
+}
+
+pub fn get_emoji_groups() -> Vec<String> {
+    vec![
+        String::from("😀 Smileys & Emotion"),
+        String::from("🤦 People & Body"),
+        String::from("🐶 Animals & Nature"),
+        String::from("🍇 Food & Drink"),
+        String::from("✈️ Travel & Places"),
+        String::from("🎈 Activities"),
+        String::from("👘 Objects"),
+        String::from("✅ Symbols"),
+        String::from("🏁 Flags"),
+    ]
+}
+
+pub fn emoji_to_group(emoji_str: String) -> emojis::Group {
+    let emoji_char = emoji_str.chars().next().unwrap().to_string();
+    emojis::get(emoji_char.as_str()).unwrap().group()
 }
 
 pub fn new_card(people: RwSignal<Vec<Person>>) {
@@ -120,4 +138,63 @@ pub fn delete_card(people_signal: RwSignal<Vec<Person>>, id: Uuid) {
             }
         };
     })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_emoji_to_group_returns_smiley_group() {
+        let group = emoji_to_group(String::from("😀 Smileys & Emotion"));
+        assert_eq!(group, emojis::Group::SmileysAndEmotion);
+    }
+
+    #[test]
+    fn test_emoji_to_group_returns_people_group() {
+        let group = emoji_to_group(String::from("🤦 People & Body"));
+        assert_eq!(group, emojis::Group::PeopleAndBody);
+    }
+
+    #[test]
+    fn test_emoji_to_group_returns_animals_group() {
+        let group = emoji_to_group(String::from("🐶 Animals & Nature"));
+        assert_eq!(group, emojis::Group::AnimalsAndNature);
+    }
+
+    #[test]
+    fn test_emoji_to_group_returns_food_group() {
+        let group = emoji_to_group(String::from("🍇 Food & Drink"));
+        assert_eq!(group, emojis::Group::FoodAndDrink);
+    }
+
+    #[test]
+    fn test_emoji_to_group_returns_travel_group() {
+        let group = emoji_to_group(String::from("✈️ Travel & Places"));
+        assert_eq!(group, emojis::Group::TravelAndPlaces);
+    }
+
+    #[test]
+    fn test_emoji_to_group_returns_activities_group() {
+        let group = emoji_to_group(String::from("🎈 Activities"));
+        assert_eq!(group, emojis::Group::Activities);
+    }
+
+    #[test]
+    fn test_emoji_to_group_returns_objects_group() {
+        let group = emoji_to_group(String::from("👘 Objects"));
+        assert_eq!(group, emojis::Group::Objects);
+    }
+
+    #[test]
+    fn test_emoji_to_group_returns_symbols_group() {
+        let group = emoji_to_group(String::from("✅ Symbols"));
+        assert_eq!(group, emojis::Group::Symbols);
+    }
+
+    #[test]
+    fn test_emoji_to_group_returns_flags_group() {
+        let group = emoji_to_group(String::from("🏁 Flags"));
+        assert_eq!(group, emojis::Group::Flags);
+    }
 }

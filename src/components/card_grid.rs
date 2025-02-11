@@ -4,7 +4,7 @@ use crate::utils::*;
 use leptos::prelude::*;
 
 #[component]
-pub fn CardGrid(people: RwSignal<Vec<Person>>, emoji_list: Vec<String>) -> impl IntoView {
+pub fn CardGrid(people: RwSignal<Vec<Person>>, emoji_list: RwSignal<Vec<String>>) -> impl IntoView {
     view! {
         <div
             class="flex flex-wrap gap-1 justify-center w-full"
@@ -14,7 +14,7 @@ pub fn CardGrid(people: RwSignal<Vec<Person>>, emoji_list: Vec<String>) -> impl 
             <For each=move || people.get() key=|person| person.id let:person>
                 <NameCard
                     name=person.name
-                    emoji_list=emoji_list.clone()
+                    emoji_list=emoji_list
                     picked=person.picked
                     not_picked=person.not_picked
                     on_keyboard_event=move |ev| {
