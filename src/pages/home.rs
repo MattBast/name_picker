@@ -1,7 +1,7 @@
-use crate::components::{start_confetti, BottomNav, CardGrid, FilledButton, IntroTile};
+use crate::components::{start_confetti, BottomNav, CardGrid, FilledButton, IntroTile, Select};
 use crate::utils::*;
 use leptos::prelude::*;
-use thaw::*;
+use thaw::Icon;
 
 #[component]
 pub fn Home() -> impl IntoView {
@@ -12,6 +12,13 @@ pub fn Home() -> impl IntoView {
     let picked = RwSignal::new(false);
 
     let confetti_container = NodeRef::<leptos::html::Div>::new();
+
+    let selected_emoji_group = RwSignal::new(String::from("🚀 Rocket"));
+    let emoji_groups = RwSignal::new(vec![
+        String::from("🚀 Rocket"),
+        String::from("🤌 Gesture"),
+        String::from("🍇 Grapes"),
+    ]);
 
     view! {
         <div class="h-screen w-full flex flex-col md:flex-row bg-gray-100">
@@ -77,6 +84,14 @@ pub fn Home() -> impl IntoView {
                         <Icon icon=icondata::BsArrowCounterclockwise class="w-4 h-4 mr-1.5"/>
                         "Reset"
                     </FilledButton>
+                </div>
+                // A select component that allows the user to pick the group of emojis
+                // they'd like to see on the cards.
+                <div
+                    class: hidden=move || picked.get()
+                    class="w-40"
+                >
+                    <Select value=selected_emoji_group values=emoji_groups/>
                 </div>
             </BottomNav>
         </div>
