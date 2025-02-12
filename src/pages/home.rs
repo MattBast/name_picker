@@ -87,6 +87,16 @@ pub fn Home() -> impl IntoView {
                         "Reset"
                     </FilledButton>
                 </div>
+                // Button to delete all cards on the page.
+                <div
+                    class: hidden=move || (people.get().len() < 2)
+                    class="w-40"
+                >
+                    <FilledButton on_click=move |_| clear_cards(people)>
+                        <Icon icon=icondata::BiTrashAltSolid class="w-5 h-5 mr-1.5"/>
+                        "Clear"
+                    </FilledButton>
+                </div>
                 // A select component that allows the user to pick the group of emojis
                 // they'd like to see on the cards.
                 <div

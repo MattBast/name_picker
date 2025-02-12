@@ -83,6 +83,10 @@ pub fn reset_cards(people: RwSignal<Vec<Person>>, picked: RwSignal<bool>) {
     })
 }
 
+pub fn clear_cards(people: RwSignal<Vec<Person>>) {
+    people.set(Vec::new())
+}
+
 pub fn next_card(people: RwSignal<Vec<Person>>, current_person: Person) {
     let current_index = people
         .get_untracked()

@@ -316,6 +316,42 @@ test("not picked cards have half opacity after spin is clicked", async ({
   await expect(page.getByTestId("card")).toHaveCSS("opacity", "0.5");
 });
 
-// add a test for making sure the inputs are disapled when spin is clicked.
-// expecty this to currently fail as the functionality hasn't been added
-// yet.
+test("the clear button is only visible when there are two or more list items", async ({
+  page,
+}) => {
+  await page.goto("http://localhost:3000");
+  await page.waitForLoadState("networkidle"); // Firefox requires a delay
+
+  // add item to list
+  await page.getByRole("button", { name: "Add a name" }).click();
+  await page.getByTestId("card").nth(0).getByRole("textbox").fill("name 1");
+
+  // make sure the spin button is not visible
+  await expect(page.getByRole("button", { name: "Clear" })).toBeHidden();
+
+  // add a second item
+  await page.getByRole("button", { name: "Add a name" }).click();
+  await page.getByTestId("card").nth(1).getByRole("textbox").fill("name 2");
+
+  // make sure the spin button is visible
+  await expect(page.getByRole("button", { name: "Clear" })).toBeVisible();
+});
+
+test("all items are deleted after the clear button is clicked", async ({
+  page,
+}) => {
+  await page.goto("http://localhost:3000");
+  await page.waitForLoadState("networkidle"); // Firefox requires a delay
+
+  // add two items to list
+  await page.getByRole("button", { name: "Add a name" }).click();
+  await page.getByTestId("card").nth(0).getByRole("textbox").fill("name 1");
+  await page.getByRole("button", { name: "Add a name" }).click();
+  await page.getByTestId("card").nth(1).getByRole("textbox").fill("name 2");
+
+  // add item to list
+  await page.getByRole("button", { name: "Clear" }).click();
+
+  // make sure one card is added when the button is clicked.
+  await expect(page.getByTestId("card")).toHaveCount(0);
+});
