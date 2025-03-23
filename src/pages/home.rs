@@ -24,6 +24,23 @@ pub fn Home() -> impl IntoView {
         emoji_list.set(get_emojis(new_group));
     };
 
+    let bg_colour = RwSignal::new(
+        "bg-gradient-to-br from-amber-100 from-20% via-pink-100 to-fuchsia-100".to_string(),
+    );
+
+    // Change the colour of the background.
+    let on_colour_select = move |colour: String| {
+        if colour == "amber_pink_fuchsia" {
+            bg_colour.set(
+                "bg-gradient-to-br from-amber-100 from-20% via-pink-100 to-fuchsia-100".to_string(),
+            )
+        } else {
+            bg_colour.set(
+                "bg-gradient-to-br from-violet-100 from-20% via-blue-100 to-green-100".to_string(),
+            )
+        }
+    };
+
     view! {
         <div class="h-screen w-full flex flex-col md:flex-row bg-gray-100">
 
@@ -36,38 +53,53 @@ pub fn Home() -> impl IntoView {
             // A tile that contains the website intro or cards depending on
             // whether any card exist or not.
             <div
-                class="flex-1 overflow-y-auto p-10 rounded-md m-2 bg-gradient-to-br from-amber-100 from-20% via-pink-100 to-fuchsia-100"
+                class=move || format!("flex-1 overflow-y-auto p-10 rounded-md m-2 {}", bg_colour.get())
             >
                 <div class="w-full flex items-center gap-2 justify-end">
+                    // Change the background colour.
+                    <Menu on_select=on_colour_select trigger_type=MenuTriggerType::Hover>
+                        // The element that opens the menu when clicked or hovered.
+                        <MenuTrigger slot>
+                            <Button
+                                shape=ButtonShape::Circular
+                                class="min-w-fit"
+                            >
+                                <div class=move || format!("rounded-full w-5 h-5 {}", bg_colour.get())/>
+                            </Button>
+                        </MenuTrigger>
+                        <MenuItem value="amber_pink_fuchsia">
+                            <div class="rounded-full w-5 h-5 bg-gradient-to-br from-amber-100 from-20% via-pink-100 to-fuchsia-100"></div>
+                        </MenuItem>
+                        <MenuItem value="violet_blue_green">
+                            <div class="rounded-full w-5 h-5 bg-gradient-to-br from-violet-100 from-20% via-blue-100 to-green-100"></div>
+                        </MenuItem>
+                    </Menu>
+
                     // A select component that allows the user to pick the group of emojis
                     // they'd like to see on the cards.
-                    <div class="w-fit">
-                        <Menu on_select=on_emoji_select trigger_type=MenuTriggerType::Hover>
-                            // The element that opens the menu when clicked or hovered.
-                            <MenuTrigger slot>
-                                <Button
-                                    shape=ButtonShape::Circular
-                                >
-                                    {selected_emoji_group}
-                                </Button>
-                            </MenuTrigger>
-                            <For each=move || emoji_groups.get() key=|v| v.clone() let:v>
-                                <MenuItem value={v.clone()}>
-                                    {v}
-                                </MenuItem>
-                            </For>
-                        </Menu>
-                    </div>
+                    <Menu on_select=on_emoji_select trigger_type=MenuTriggerType::Hover>
+                        // The element that opens the menu when clicked or hovered.
+                        <MenuTrigger slot>
+                            <Button
+                                shape=ButtonShape::Circular
+                            >
+                                {selected_emoji_group}
+                            </Button>
+                        </MenuTrigger>
+                        <For each=move || emoji_groups.get() key=|v| v.clone() let:v>
+                            <MenuItem value={v.clone()}>
+                                {v}
+                            </MenuItem>
+                        </For>
+                    </Menu>
 
                     // Button to delete all cards on the page.
-                    <div class="w-fit">
-                        <Button
-                            icon=icondata::BiTrashAltSolid
-                            shape=ButtonShape::Circular
-                            on:click=move |_| clear_cards(people)
-                            class: hidden=move || (people.get().len() < 2)
-                        />
-                    </div>
+                    <Button
+                        icon=icondata::BiTrashAltSolid
+                        shape=ButtonShape::Circular
+                        on:click=move |_| clear_cards(people)
+                        class: hidden=move || (people.get().len() < 2)
+                    />
                 </div>
 
                 // An intro page that shows when the user has not yet
