@@ -1,7 +1,7 @@
-use crate::components::{start_confetti, BottomNav, CardGrid, FilledButton, IntroTile, Select};
+use crate::components::{start_confetti, BottomNav, CardGrid, FilledButton, IntroTile};
 use crate::utils::*;
 use leptos::prelude::*;
-use thaw::Icon;
+use thaw::{Button, ButtonShape, Icon, Menu, MenuItem, MenuTrigger, MenuTriggerType};
 
 #[component]
 pub fn Home() -> impl IntoView {
@@ -15,12 +15,14 @@ pub fn Home() -> impl IntoView {
 
     let selected_emoji_group = RwSignal::new(String::from("😀 Smileys & Emotion"));
     let emoji_groups = RwSignal::new(get_emoji_groups());
-    // Create an effect that runs whenever selected_emoji_group changes
-    Effect::new(move |_| {
-        let emoji = selected_emoji_group.get();
+
+    // Declare what happens when the "more" menu items are selected
+    let on_emoji_select = move |emoji: String| {
+        selected_emoji_group.set(emoji.clone());
+
         let new_group = emoji_to_group(emoji);
         emoji_list.set(get_emojis(new_group));
-    });
+    };
 
     view! {
         <div class="h-screen w-full flex flex-col md:flex-row bg-gray-100">
@@ -36,6 +38,38 @@ pub fn Home() -> impl IntoView {
             <div
                 class="flex-1 overflow-y-auto p-10 rounded-md m-2 bg-gradient-to-br from-amber-100 from-20% via-pink-100 to-fuchsia-100"
             >
+                <div class="w-full flex items-center gap-2 justify-end">
+                    // A select component that allows the user to pick the group of emojis
+                    // they'd like to see on the cards.
+                    <div class="w-fit">
+                        <Menu on_select=on_emoji_select trigger_type=MenuTriggerType::Hover>
+                            // The element that opens the menu when clicked or hovered.
+                            <MenuTrigger slot>
+                                <Button
+                                    shape=ButtonShape::Circular
+                                >
+                                    {selected_emoji_group}
+                                </Button>
+                            </MenuTrigger>
+                            <For each=move || emoji_groups.get() key=|v| v.clone() let:v>
+                                <MenuItem value={v.clone()}>
+                                    {v}
+                                </MenuItem>
+                            </For>
+                        </Menu>
+                    </div>
+
+                    // Button to delete all cards on the page.
+                    <div class="w-fit">
+                        <Button
+                            icon=icondata::BiTrashAltSolid
+                            shape=ButtonShape::Circular
+                            on:click=move |_| clear_cards(people)
+                            class: hidden=move || (people.get().len() < 2)
+                        />
+                    </div>
+                </div>
+
                 // An intro page that shows when the user has not yet
                 // added any items to the list.
                 <IntroTile people/>
@@ -86,24 +120,6 @@ pub fn Home() -> impl IntoView {
                         <Icon icon=icondata::BsArrowCounterclockwise class="w-4 h-4 mr-1.5"/>
                         "Reset"
                     </FilledButton>
-                </div>
-                // Button to delete all cards on the page.
-                <div
-                    class: hidden=move || (people.get().len() < 2)
-                    class="w-40"
-                >
-                    <FilledButton on_click=move |_| clear_cards(people)>
-                        <Icon icon=icondata::BiTrashAltSolid class="w-5 h-5 mr-1.5"/>
-                        "Clear"
-                    </FilledButton>
-                </div>
-                // A select component that allows the user to pick the group of emojis
-                // they'd like to see on the cards.
-                <div
-                    class: hidden=move || picked.get()
-                    class="w-40"
-                >
-                    <Select value=selected_emoji_group values=emoji_groups/>
                 </div>
             </BottomNav>
         </div>

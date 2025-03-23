@@ -10,6 +10,7 @@ use leptos::prelude::*;
 use leptos_meta::*;
 use leptos_router::components::{Route, Router, Routes};
 use leptos_router::path;
+use thaw::ConfigProvider;
 
 fn main() {
     _ = console_log::init_with_level(log::Level::Debug);
@@ -34,8 +35,12 @@ pub fn App() -> impl IntoView {
 #[component]
 pub fn TheRouter() -> impl IntoView {
     view! {
-        <Routes fallback=|| "404">
-            <Route path=path!("/") view=Home/>
-        </Routes>
+        // The ConfigProvider component is required for Thaw,
+        // please place it at the root of the Thaw component.
+        <ConfigProvider>
+            <Routes fallback=|| "404">
+                <Route path=path!("/") view=Home/>
+            </Routes>
+        </ConfigProvider>
     }
 }
