@@ -34,6 +34,12 @@ This command is not yet used in the pipeline but can be used to standardise the 
 leptosfmt ./**/*.rs
 ```
 
+This also isn't used in the CI but can be used manually to automatically update all dependencies to a compatible version. The `--dry-run` flag can be added to show the intended changes without acutally making them.
+```bash
+cargo install cargo-edit
+cargo update
+```
+
 Use these commands to run the end to end tests. These tests use Playwright to open the website, click around and make sure the content renders okay.
 ```bash
 trunk serve

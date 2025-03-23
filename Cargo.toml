@@ -10,16 +10,16 @@ leptos_meta = { version = "0.7" }
 leptos_router = { version = "0.7" }
 thaw = { version = "0.4", features = ["csr"] }
 web-sys = { version = "0.3", features = ["HtmlElement", "Window", "Document"] }
-icondata = "0.3.0"
+icondata = "0.3.1"
 log = "0.4"
 emojis = "0.6"
 rand = "0.8"
 # The "js" feature makes  the uuid crate WASM compatible. Removing
 # it can cause unexpected errors when the crate is used.
-uuid = { version = "1.11", features = ["v4", "js"] }
+uuid = { version = "1.16", features = ["v4", "js"] }
 console_log = { version = "1" }
 console_error_panic_hook = { version = "0.1" }
-
+getrandom = { version = "0.2", features = ["js"] }
 
 [features]
 csr = ["leptos/csr"]
